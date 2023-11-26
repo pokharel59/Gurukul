@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -17,26 +19,28 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: [
           Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             color: Color(0xFFF2F2F2),
           ),
           Positioned(
-            top: 0,
+            top: -320,
             left: 0,
             child: Container(
-              padding: EdgeInsets.only(top: 70),
+              padding: EdgeInsets.only(top: 160),
               child: Container(
+                padding: EdgeInsets.only(top: 200),
                 child: Image(
                   image: ResizeImage(
-                      AssetImage(
-                          'assets/gurukul-logo.png'
-                      ),
-                      width: 250 ,
-                      height: 250),
+                      AssetImage('assets/gurukul-logo.png'),
+                      width: 240,
+                      height: 240),
                 ),
               ),
-              height: 250,
-              width: MediaQuery.sizeOf(context).width,
-              decoration: const BoxDecoration(
+              height: 600,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(1000),
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomRight,
@@ -45,11 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                     Color(0x20EC00B4),
                   ],
                 ),
-                borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(110),
-                )
               ),
-
             ),
           ),
           Positioned(
@@ -148,8 +148,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   SizedBox(height: 40),
+
+                  //login button
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                    },
                     child: SizedBox(
                       height: 50,
                       width: double.infinity,

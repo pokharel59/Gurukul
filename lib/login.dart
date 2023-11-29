@@ -152,11 +152,11 @@ class _LoginPageState extends State<LoginPage> {
                   //login button
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                      Navigator.pushReplacementNamed(context, '/home');
                     },
                     child: SizedBox(
                       height: 50,
-                      width: double.infinity,
+                      width: double.infinity,//
                       child: Center(
                         child: Text("Login",
                           textAlign: TextAlign.center,
@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    style: ElevatedButton.styleFrom(
+                    style: ElevatedButton.styleFrom(  //.styleForm style the elevated button.
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

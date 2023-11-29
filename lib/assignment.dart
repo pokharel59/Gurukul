@@ -16,20 +16,6 @@ class _AssignmentPageState extends State<AssignmentPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      //bottom navigation bar
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: primary_color,
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month),label: 'Calendar'),
-          BottomNavigationBarItem(icon: Icon(Icons.assignment),label: 'Assignment'),
-          BottomNavigationBarItem(icon: Icon(Icons.event),label: 'Events'),
-        ],
-      ),
-      
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
         height: size.height,

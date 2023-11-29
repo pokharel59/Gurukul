@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/assignment.dart';
 import 'package:gurukul_mobile_app/calendar.dart';
-import 'home.dart';
+import 'package:gurukul_mobile_app/event.dart';
+import 'package:gurukul_mobile_app/home.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'login.dart';
 
 void main() {
+
   runApp(const MyApp());
 }
 
@@ -16,10 +19,68 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter',
       debugShowCheckedModeBanner: false,
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => LoginPage(),
+        '/home': (context) => MyHomePage(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: LoginPage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget{
+  @override
+  _MyHomePage createState() => _MyHomePage();
+}
+
+class _MyHomePage extends State<MyHomePage>{
+  int _currentIndex = 0;
+
+  List<Widget> _pages =[
+    HomePage(),
+    CalendarPage(),
+    AssignmentPage(),
+    EventPage(),
+  ];
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      body: _pages[_currentIndex],
+        bottomNavigationBar: SalomonBottomBar(
+          currentIndex: _currentIndex,
+            onTap: (index){
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          items: [
+            SalomonBottomBarItem(
+              icon: Icon(Icons.home),
+              title: Text("Home"),
+              selectedColor: Colors.purple,
+            ),
+            SalomonBottomBarItem(
+              icon: Icon(Icons.calendar_month),
+              title: Text("Calendar"),
+              selectedColor: Colors.pink,
+            ),
+            SalomonBottomBarItem(
+              icon: Icon(Icons.assignment),
+              title: Text("Assignment"),
+              selectedColor: Colors.orange,
+            ),
+            SalomonBottomBarItem(
+              icon: Icon(Icons.event),
+              title: Text("Events"),
+              selectedColor: Colors.orange,
+            ),
+          ],
+        ),
     );
   }
 }

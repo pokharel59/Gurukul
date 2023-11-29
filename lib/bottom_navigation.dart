@@ -1,78 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:gurukul_mobile_app/assignment.dart';
-import 'package:gurukul_mobile_app/home.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import 'assignment.dart';
 import 'calendar.dart';
 import 'event.dart';
+import 'home.dart';
 
-void main() {
-  runApp(MyApp());
+class BuildSalomonBottomBar extends StatefulWidget {
+  @override
+  _BuildSalomonBottomBarState createState() => _BuildSalomonBottomBarState();
 }
 
-class MyApp extends StatefulWidget {
-  static final title = 'salomon_bottom_bar';
+class _BuildSalomonBottomBarState extends State<BuildSalomonBottomBar> {
+  var _currentIndex = 0;
 
   @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  List pages = [
-    HomePage(),
-    CalendarPage(),
-    AssignmentPage(),
-    EventPage(),
-  ];
-
+  Widget _buildPage(int index) {
+    switch (index) {
+      case 0:
+        return HomePage();
+      case 1:
+        return CalendarPage();
+      case 2:
+        return AssignmentPage();
+      case 3:
+        return EventPage();
+      default:
+        return Container(); // Placeholder, you can modify this based on your needs
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: MyApp.title,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(MyApp.title),
-        ),
-        bottomNavigationBar: buildSalomonBottomBar(),
+    return Scaffold(
+      body: _buildPage(_currentIndex),
+      bottomNavigationBar: SalomonBottomBar(
+        currentIndex: _currentIndex,
+        onTap: (i) => setState(() => _currentIndex = i),
+        items: [
+          /// Home
+          SalomonBottomBarItem(
+            icon: Icon(Icons.home),
+            title: Text("Home"),
+            selectedColor: Colors.purple,
+          ),
+
+          /// Likes
+          SalomonBottomBarItem(
+            icon: Icon(Icons.calendar_month),
+            title: Text("Calendar"),
+            selectedColor: Colors.pink,
+          ),
+
+          /// Search
+          SalomonBottomBarItem(
+            icon: Icon(Icons.assignment_outlined),
+            title: Text("Assignment"),
+            selectedColor: Colors.orange,
+          ),
+
+          /// Profile
+          SalomonBottomBarItem(
+            icon: Icon(Icons.event),
+            title: Text("Events"),
+            selectedColor: Colors.teal,
+          ),
+        ],
       ),
     );
   }
-}
-
-SalomonBottomBar buildSalomonBottomBar() {
-  var currentIndex = 0;
-
-
-  return SalomonBottomBar(
-    currentIndex: currentIndex,
-    //onTap: (i) => setState(() => _currentIndex = i),
-    items: [
-      SalomonBottomBarItem(
-        icon: Icon(Icons.home),
-        title: Text("Home"),
-        selectedColor: Colors.purple,
-      ),
-      SalomonBottomBarItem(
-        icon: Icon(Icons.calendar_month),
-        title: Text("Calendar"),
-        selectedColor: Colors.pink,
-      ),
-      SalomonBottomBarItem(
-        icon: Icon(Icons.assignment),
-        title: Text("Assignment"),
-        selectedColor: Colors.orange,
-
-      ),
-      SalomonBottomBarItem(
-        icon: Icon(Icons.event),
-        title: Text("Events"),
-        selectedColor: Colors.teal,
-      ),
-    ],
-  );
 }

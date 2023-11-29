@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gurukul_mobile_app/assignment.dart';
-import 'calendar.dart';
-import 'bottom_navigation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,34 +8,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int myCurrentIndex = 0;
-  List pages = [
-    HomePage(),
-    CalendarPage(),
-    AssignmentPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {
-    var primary_color = Color(0xffbe00fe);
+    var primary_color = Color(0xFFD000B6);
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      //bottom navigation bar
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   backgroundColor: Colors.white,
-      //   selectedItemColor: primary_color,
-      //   unselectedItemColor: Colors.grey,
-      //   items: [
-      //     BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home',),
-      //     BottomNavigationBarItem(icon: Icon(Icons.calendar_month),label: 'Calendar', ),
-      //     BottomNavigationBarItem(icon: Icon(Icons.assignment),label: 'Assignment'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.event),label: 'Events')
-      //   ],
-      // ),
-
-
         body: Column(
         children: [
           Padding(
@@ -439,11 +415,11 @@ class _HomePageState extends State<HomePage> {
 
         ],
       ),
-        bottomNavigationBar: buildSalomonBottomBar()
-
     );
+
   }
-}
+
+  }
 
 
 

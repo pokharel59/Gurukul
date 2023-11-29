@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gurukul_mobile_app/assignment.dart';
+import 'calendar.dart';
+import 'bottom_navigation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +11,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int myCurrentIndex = 0;
+  List pages = [
+    HomePage(),
+    CalendarPage(),
+    AssignmentPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +24,22 @@ class _HomePageState extends State<HomePage> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      //backgroundColor: Colors.grey,
-      body: Column(
+      //bottom navigation bar
+      // bottomNavigationBar: BottomNavigationBar(
+      //   type: BottomNavigationBarType.fixed,
+      //   backgroundColor: Colors.white,
+      //   selectedItemColor: primary_color,
+      //   unselectedItemColor: Colors.grey,
+      //   items: [
+      //     BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home',),
+      //     BottomNavigationBarItem(icon: Icon(Icons.calendar_month),label: 'Calendar', ),
+      //     BottomNavigationBarItem(icon: Icon(Icons.assignment),label: 'Assignment'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.event),label: 'Events')
+      //   ],
+      // ),
+
+
+        body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 30, 10, 4),
@@ -47,7 +70,7 @@ class _HomePageState extends State<HomePage> {
 
           SizedBox(height: 10),
 
-          //single child scrollview 0xffa8df8e, 0xfebebf
+          //single child scrollview
           SingleChildScrollView(
             padding: EdgeInsets.only(left: 20),
             scrollDirection: Axis.horizontal,
@@ -178,7 +201,6 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
             height: 100,
-            width: size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: primary_color
@@ -205,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                           Text('02 February 2024', style: TextStyle(color: Colors.white70,),)
                         ],
                       ),
-                      SizedBox(width: 30),
+                      SizedBox(width: 20),
                       Container(
                         width: 60,
                         height: 30,
@@ -222,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                 //3 dots
                 Positioned(
                   bottom: 6,
-                  left: 180,
+                  left: 160,
                   child: Container(
                     child: Row(
                       children: [
@@ -406,26 +428,19 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
+
+
                 ],
+
               ),
             ),
-          ),
-        ],
-      ),
 
-      //bottom navigation bar
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: primary_color,
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month),label: 'Calendar'),
-          BottomNavigationBarItem(icon: Icon(Icons.assignment),label: 'Assignment'),
-          BottomNavigationBarItem(icon: Icon(Icons.event),label: 'Events'),
+          ),
+
         ],
       ),
+        bottomNavigationBar: buildSalomonBottomBar()
+
     );
   }
 }

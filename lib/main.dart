@@ -17,16 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter',
       debugShowCheckedModeBanner: false,
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(),
         '/home': (context) => MyHomePage(),
       },
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: LoginPage(),
     );
   }
@@ -40,7 +36,7 @@ class MyHomePage extends StatefulWidget{
 class _MyHomePage extends State<MyHomePage>{
   int _currentIndex = 0;
 
-  List<Widget> _pages =[
+  List _pages = [
     HomePage(),
     CalendarPage(),
     AssignmentPage(),
@@ -72,12 +68,12 @@ class _MyHomePage extends State<MyHomePage>{
             SalomonBottomBarItem(
               icon: Icon(Icons.assignment),
               title: Text("Assignment"),
-              selectedColor: Colors.orange,
+              selectedColor: Colors.cyan,
             ),
             SalomonBottomBarItem(
               icon: Icon(Icons.event),
               title: Text("Events"),
-              selectedColor: Colors.orange,
+              selectedColor: Colors.deepPurple,
             ),
           ],
         ),

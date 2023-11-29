@@ -50,6 +50,7 @@ class _CalendarPageState extends State<CalendarPage> {
             SizedBox(height: 10),
 
             //calendar table
+            //table calendar
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -440,18 +441,11 @@ class _CalendarPageState extends State<CalendarPage> {
                           ),
                         ],
                       ),
-
-
-
-
                     ],
                   ),
                 ),
               ),
             ),
-
-
-
           ],
         ),
       ),

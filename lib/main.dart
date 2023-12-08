@@ -5,9 +5,14 @@ import 'package:gurukul_mobile_app/event.dart';
 import 'package:gurukul_mobile_app/home.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
-
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

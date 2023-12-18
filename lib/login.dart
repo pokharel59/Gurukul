@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -45,8 +43,8 @@ class _LoginPageState extends State<LoginPage> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0xFFD000B6),
-                    Color(0x20EC00B4),
+                    Color(0xFFA4C4E0),
+                    Color(0xFFA4C4E0),
                   ],
                 ),
               ),
@@ -171,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      backgroundColor: Color(0xFFD000B6),
+                      backgroundColor: Color(0xFF687EFF),
                     ),
                   ),
                 ],

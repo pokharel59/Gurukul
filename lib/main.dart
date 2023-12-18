@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gurukul_mobile_app/assignment.dart';
-import 'package:gurukul_mobile_app/calendar.dart';
-import 'package:gurukul_mobile_app/event.dart';
-import 'package:gurukul_mobile_app/home.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'Views/StudentView/assignment.dart';
+import 'Views/StudentView/calendar.dart';
+import 'Views/StudentView/event.dart';
+import 'Views/StudentView/home.dart';
 import 'login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

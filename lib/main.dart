@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gurukul_mobile_app/Views/AdminView/aAddTeacher.dart';
+import 'package:gurukul_mobile_app/Views/AdminView/aNotice.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'Views/StudentView/sAssignment.dart';
 import 'Views/StudentView/sCalendar.dart';
@@ -27,8 +29,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/home': (context) => MyHomePage(),
+        '/adminPage': (context) => AdminTeacherPage() //AdminNoticePage()
       },
-      home: LoginPage(),
+      home: const AdminTeacherPage(),
     );
   }
 }

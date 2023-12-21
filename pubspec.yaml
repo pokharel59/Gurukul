@@ -43,6 +43,8 @@ dependencies:
   http:
   intl:
   firebase_core:
+  file_picker:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:

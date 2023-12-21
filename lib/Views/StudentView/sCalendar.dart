@@ -84,7 +84,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     color: Color(0xffd9d9d8),
                     borderRadius: BorderRadius.circular(4)
                   ),
-                  child: Row(
+                  child: const Row(
                     children: [
                       Text('All'),
                       Icon(Icons.keyboard_arrow_down_sharp)
@@ -228,7 +228,7 @@ class _CalendarPageState extends State<CalendarPage> {
                               borderRadius: BorderRadius.circular(30),
                               color: orange_color,
                             ),
-                            child: Column(
+                            child: const Column(
                               children: [
                                 Text('23', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),),
                                 Text('May', style: TextStyle(color: Colors.white60),)

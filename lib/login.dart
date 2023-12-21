@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurukul_mobile_app/Components/messageToast.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,6 +9,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController StudentIDText = TextEditingController();
+  TextEditingController PasswordText = TextEditingController();
+  Toaster showMessage = Toaster();
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontSize: 20,
                     ),
+                    controller: StudentIDText,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -118,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontSize: 20,
                     ),
+                    controller: PasswordText,
                     obscureText: true,
                     decoration: InputDecoration(
                       filled: true,
@@ -150,8 +156,24 @@ class _LoginPageState extends State<LoginPage> {
                   //login button
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/home');
+                      String enteredID = StudentIDText.text.trim();
+                      String enteredPassword = PasswordText.text.trim();
+
+                      if (enteredID == null || enteredID.isEmpty || enteredPassword == null || enteredPassword.isEmpty) {
+                        showMessage.showToast('Field cannot be empty');
+                      } else {
+                        if (enteredID == 'admin' && enteredPassword == 'admin') {
+                          Navigator.pushReplacementNamed(context, '/adminPage');
+                          showMessage.showToast('Login successful');
+                        } else if (enteredID == '2210112027' && enteredPassword == 'student') {
+                          Navigator.pushReplacementNamed(context, '/home');
+                          showMessage.showToast('Login successful');
+                        } else {
+                          showMessage.showToast('Error login');
+                        }
+                      }
                     },
+
                     child: SizedBox(
                       height: 50,
                       width: double.infinity,//

@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(onPressed: (){}, icon: Icon(Icons.menu),alignment: Alignment.centerLeft,),
+                  IconButton(onPressed: (){ Navigator.pushReplacementNamed(context, '/login');}, icon: Icon(Icons.menu),alignment: Alignment.centerLeft,),
                   Text('Home', style: TextStyle(fontSize: 20),),
                   IconButton(onPressed: (){}, icon: Icon(Icons.notifications_none),alignment: Alignment.centerRight,),
                 ],

@@ -84,28 +84,6 @@ class _AdminNoticePageState extends State<AdminNoticePage>{
                       ),
                   ),
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        const Text('Select Class', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 10.0),
-                              child: Container(
-                                width: 100,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: const Color(0xFFF2F2F2)
-                                ),
-                                child: Center(child: const Text('Subject')),
-                              ),
-                            ),
-                      ],
-                    ),
-                  ],
-                ),
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

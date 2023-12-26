@@ -45,6 +45,7 @@ dependencies:
   firebase_core:
   file_picker:
   fluttertoast:
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:

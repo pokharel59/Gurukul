@@ -20,6 +20,14 @@ class CustomAppBar<T> extends StatelessWidget implements PreferredSizeWidget{
         style: TextStyle(color: Colors.black),
       ),
       backgroundColor: Colors.white,
+      actions: [
+        IconButton(
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/adminPage');
+            },
+            icon: Icon(Icons.class_, color: Colors.black,)
+        )
+      ],
     );
   }
   @override

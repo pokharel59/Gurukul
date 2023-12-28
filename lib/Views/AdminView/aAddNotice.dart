@@ -1,15 +1,29 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/customAppBar.dart';
+import 'package:gurukul_mobile_app/Controllers/AdminController/aNoticeContoller.dart';
+import 'package:gurukul_mobile_app/Models/AdminModels/aNoticeModel.dart';
 
 class AdminNoticePage extends StatefulWidget{
-  const AdminNoticePage({super.key});
+  final String classId;
+
+  AdminNoticePage({required this.classId});
 
   @override
   State<AdminNoticePage> createState() => _AdminNoticePageState();
 }
 
 class _AdminNoticePageState extends State<AdminNoticePage>{
+  final TextEditingController noticeTitle = TextEditingController();
+  final TextEditingController noticeDescription = TextEditingController();
+  final NoticeController noticeController = NoticeController();
+  late String classId;
+
+  void initState(){
+    super.initState();
+    classId = widget.classId;
+  }
+
   Future<void> getFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
 }
@@ -28,9 +42,10 @@ class _AdminNoticePageState extends State<AdminNoticePage>{
               ],
             ),
             const SizedBox(height: 10),
-            const SizedBox(
+            SizedBox(
               height: 50,
               child: TextField(
+                controller: noticeTitle,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Color(0xFF808080))
@@ -47,9 +62,10 @@ class _AdminNoticePageState extends State<AdminNoticePage>{
               ],
             ),
             const SizedBox(height: 10),
-            const SizedBox(
+            SizedBox(
               height: 50,
               child: TextField(
+                controller: noticeDescription,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFF808080))
@@ -113,7 +129,12 @@ class _AdminNoticePageState extends State<AdminNoticePage>{
                         padding: const EdgeInsets.only(left: 8.0),
                         child: ElevatedButton(
                             onPressed: (){
+                              NoticeModel noticeModel = NoticeModel(
+                                  title: noticeTitle.text,
+                                  description: noticeDescription.text
+                              );
 
+                              noticeController.addNotice(classId, noticeModel);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blue, // Background color

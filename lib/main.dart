@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurukul_mobile_app/Components/adminButtonNav.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddAsignment.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddCalender.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddNotice.dart';
@@ -30,15 +31,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/createCalender',
+      initialRoute: '/adminPage',
       routes: {
         '/login': (context) => LoginPage(),
         '/home': (context) => MyHomePage(),
-        '/adminPage': (context) => AdminViewClass(), //AdminNoticePage()
+        '/adminPage': (context) => AdminViewClass(),
         '/createClass': (context) => AdminCreateClass(),
-        '/createAssignment': (context) => AdminAssignmentPage(),
-        '/createCalender': (context) => AdminCalenderPage(),
-        '/AdminHome': (context) => MyAdminHomePage(),
+        //'/createAssignment': (context) => AdminAssignmentPage(),
+        //'/createCalender': (context) => AdminCalenderPage(),
+        //'/createNotice': (context) => AdminNoticePage(),
+        //'/adminHome': (context) => AdminBottomNav()
         //'/createStudent': (context) => AdminStudent(),
         //'/createTeacher': (context) => AdminTeacherPageState(),
       },
@@ -96,54 +98,6 @@ class _MyHomePage extends State<MyHomePage>{
             ),
           ],
         ),
-    );
-  }
-}
-
-
-class MyAdminHomePage extends StatefulWidget{
-  @override
-  _MyAdminHomePage createState() => _MyAdminHomePage();
-}
-
-class _MyAdminHomePage extends State<MyAdminHomePage>{
-  int _currentIndex = 0;
-
-  List _pages = [
-    AdminAssignmentPage(),
-    AdminCalenderPage(),
-    AdminNoticePage(),
-  ];
-
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: SalomonBottomBar(
-        currentIndex: _currentIndex,
-        onTap: (index){
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          SalomonBottomBarItem(
-            icon: Icon(Icons.calendar_month),
-            title: Text("Calendar"),
-            selectedColor: Colors.pink,
-          ),
-          SalomonBottomBarItem(
-            icon: Icon(Icons.assignment),
-            title: Text("Assignment"),
-            selectedColor: Colors.cyan,
-          ),
-          SalomonBottomBarItem(
-            icon: Icon(Icons.event),
-            title: Text("Events"),
-            selectedColor: Colors.deepPurple,
-          ),
-        ],
-      ),
     );
   }
 }

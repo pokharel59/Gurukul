@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gurukul_mobile_app/Components/adminButtonNav.dart';
 import 'package:gurukul_mobile_app/Components/customAppBar.dart';
 import 'package:gurukul_mobile_app/Controllers/AdminController/aClassController.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddStudent.dart';
@@ -96,7 +97,7 @@ class _AdminViewClassPageState extends State<AdminViewClass>{
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => AdminStudent(classId: documentId),
+                                  builder: (context) => AdminBottomNav(classId: documentId),
                                 ),
                               );
                             },

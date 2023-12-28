@@ -1,15 +1,29 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/customAppBar.dart';
+import 'package:gurukul_mobile_app/Controllers/AdminController/aAssignmentController.dart';
+import 'package:gurukul_mobile_app/Models/AdminModels/aAssignmentModel.dart';
 
 class AdminAssignmentPage extends StatefulWidget{
-  const AdminAssignmentPage({super.key});
+  final String classID;
+
+  AdminAssignmentPage({required this.classID});
 
   @override
   State<AdminAssignmentPage> createState() => _AdminAssignmentPageState();
 }
 
 class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
+  late String classId;
+  final TextEditingController assignmentTitle = TextEditingController();
+  final TextEditingController assignmentDescription = TextEditingController();
+  final AssignmentController assignmentController = AssignmentController();
+
+  void initState(){
+    super.initState();
+    classId = widget.classID;
+  }
+
   String selectedItem = 'science';
   List<String> subjectItemList = ['math', 'science', 'nepali'];
   DateTime selectDateTime = DateTime.now();
@@ -62,9 +76,10 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
                 ],
               ),
               const SizedBox(height: 10),
-              const SizedBox(
+              SizedBox(
                 height: 50,
                 child: TextField(
+                  controller: assignmentTitle,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFF808080))
@@ -81,9 +96,10 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
                 ],
               ),
               const SizedBox(height: 10),
-              const SizedBox(
+               SizedBox(
                 height: 50,
                 child: TextField(
+                  controller: assignmentDescription,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFF808080))
@@ -196,7 +212,14 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
                           padding: const EdgeInsets.only(left: 8.0),
                           child: ElevatedButton(
                               onPressed: () {
+                                AssignmentModel assignmentModel = AssignmentModel(
+                                    title: assignmentTitle.text,
+                                    description: assignmentDescription.text,
+                                    subject: selectedItem,
+                                    deadline: selectDateTime.timeZoneName
+                                );
 
+                                assignmentController.addAssignment(classId, assignmentModel);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue, // Background color

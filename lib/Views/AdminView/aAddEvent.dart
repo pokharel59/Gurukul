@@ -1,30 +1,35 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/customAppBar.dart';
-import 'package:gurukul_mobile_app/Controllers/AdminController/aCalenderController.dart';
-import 'package:gurukul_mobile_app/Models/AdminModels/aCalenderModel.dart';
+import 'package:gurukul_mobile_app/Controllers/AdminController/aAssignmentController.dart';
+import 'package:gurukul_mobile_app/Controllers/AdminController/aEventController.dart';
+import 'package:gurukul_mobile_app/Models/AdminModels/aAssignmentModel.dart';
+import 'package:gurukul_mobile_app/Models/AdminModels/aEventModel.dart';
 
-class AdminCalenderPage extends StatefulWidget{
-  final String classId;
+class AdminEventPage extends StatefulWidget{
+  final String classID;
 
-  AdminCalenderPage({required this.classId});
+  AdminEventPage({required this.classID});
 
   @override
-  State<AdminCalenderPage> createState() => _AdminCalenderPageState();
+  State<AdminEventPage> createState() => _AdminEventPageState();
 }
 
-class _AdminCalenderPageState extends State<AdminCalenderPage>{
-  final TextEditingController eventTitle = TextEditingController();
-  final CalenderController calenderController = CalenderController();
-  String selectedItem = 'Deadline';
-  List<String> eventItemList = ['Deadline', 'Holiday', 'Event'];
-  DateTime selectDateTime = DateTime.now();
+class _AdminEventPageState extends State<AdminEventPage>{
   late String classId;
+  final TextEditingController eventTitle = TextEditingController();
+  final TextEditingController eventDescription = TextEditingController();
+  final TextEditingController eventLocation = TextEditingController();
+  final EventController eventController = EventController();
 
   void initState(){
     super.initState();
-    classId = widget.classId;
+    classId = widget.classID;
   }
+
+  String selectedItem = 'Running';
+  List<String> subjectItemList = ['Upcoming', 'Running'];
+  DateTime selectDateTime = DateTime.now();
 
   Future<void> _selectDatetime(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
@@ -63,35 +68,11 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: CustomAppBar(title: 'Add Calender'),
+        appBar: CustomAppBar(title: 'Add Event'),
         body: Padding(
           padding: const EdgeInsets.only(top: 25.0, right: 14.0, left: 14.0),
           child: Column(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Calender', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
-                  Text('Add Event', style: TextStyle(color: Colors.grey, fontSize: 15.0, fontWeight: FontWeight.w500),),
-                  SizedBox(height: 10),
-                  SizedBox(
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: (){
-                        _selectDatetime(context);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(Icons.calendar_month),
-                          Text('Choose Date'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Text('$selectDateTime'),
-                ],
-              ),
-              SizedBox(height: 15),
               const Row(
                 children: [
                   Text('Event Title', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
@@ -111,15 +92,76 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                   ),
                 ),
               ),
-              Text('Choose a date first', style: TextStyle(color: Colors.grey, fontSize: 15.0, fontWeight: FontWeight.w500),),
-              const SizedBox(height: 15),
+              const SizedBox(height: 15.0),
+              const Row(
+                children: [
+                  Text('Event Description', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
+                ],
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: eventDescription,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF808080))
+                      ),
+                      hintText: 'Enter Description',
+                      hintStyle: TextStyle(color: Color(0xFF808080))
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Event Time', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: (){
+                        _selectDatetime(context);
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.calendar_month),
+                          Text('Choose Date'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Text('$selectDateTime'),
+                ],
+              ),
+              const SizedBox(height: 15.0),
+              const Row(
+                children: [
+                  Text('Event Location', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
+                ],
+              ),
+               SizedBox(height: 10),
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: eventLocation,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF808080))
+                      ),
+                      hintText: 'Enter Location',
+                      hintStyle: TextStyle(color: Color(0xFF808080))
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Column(
                     children: [
-                      const Text('Event Type', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
+                      const Text('Event Status', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
                       Padding(
-                        padding: const EdgeInsets.only(top: 5.0, bottom: 3.0, right: 10.0),
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 10.0),
                         child: DropdownButton<String>(
                           value: selectedItem,
                           onChanged: (String? newItem){
@@ -127,7 +169,7 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                               selectedItem = newItem ?? '';
                             });
                           },
-                          items: eventItemList.map((String item){
+                          items: subjectItemList.map((String item){
                             return DropdownMenuItem<String>(
                               value: item,
                               child: Text(item),
@@ -135,14 +177,36 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                           }).toList(),
                         ),
                       ),
-                      Text('Choose a event first', style: TextStyle(color: Colors.grey, fontSize: 15.0, fontWeight: FontWeight.w500),),
                     ],
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+
+              SizedBox(height: 20),
               Column(
                 children: [
+                  GestureDetector(
+                    onTap: (){
+                      getFiles();
+                    },
+                    child: Container(
+                      width: 500,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF2F2F2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 16.0),
+                        child: Column(
+                          children: [
+                            Icon(Icons.upload_file, color: Colors.black),
+                            Text('Upload Files/Image'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -172,13 +236,15 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                           padding: const EdgeInsets.only(left: 8.0),
                           child: ElevatedButton(
                               onPressed: () {
-                                CalenderModel calenderModel = CalenderModel(
-                                    calenderDate: selectDateTime.day,
-                                    eventTitle: eventTitle.text,
-                                    eventType: selectedItem
+                                EventModel eventModel = EventModel(
+                                    title: eventTitle.text,
+                                    description: eventDescription.text,
+                                    eventDate: selectDateTime.day,
+                                    location: eventLocation.text,
+                                    eventStatus: selectedItem
                                 );
 
-
+                                eventController.addEvent(classId, eventModel);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue, // Background color
@@ -191,43 +257,6 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                               child: Text('Create')
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('View Events', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
-                        ],
-                      ),
-                      StreamBuilder(
-                          stream: calenderController.getCalenderEvent(classId),
-                          builder: (context, snapshot){
-                            if(snapshot.connectionState == ConnectionState.waiting){
-                              return Center(child: CircularProgressIndicator());
-                            }if(snapshot.hasError){
-                              print('Error fetching data ${snapshot.error}');
-                            }
-
-                            List<CalenderModel> calenders = snapshot.data ?? [];
-                            if(calenders.isEmpty){
-                              return Text('No events available');
-                            }else{
-                              return ListView.builder(
-                                  itemCount: calenders.length,
-                                  itemBuilder: (context, index){
-                                    return Card(
-                                      child: ListTile(
-                                        title: Text(calenders[index].eventTitle),
-                                        subtitle: Text(calenders[index].eventType),
-                                        trailing: Text(calenders[index].calenderDate as String),
-                                      ),
-                                    );
-                                  }
-                              );
-                            }
-                          }
                       )
                     ],
                   ),

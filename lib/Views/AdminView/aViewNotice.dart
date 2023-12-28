@@ -28,6 +28,12 @@ class _AdminViewNoticePageState extends State<AdminViewNotice>{
     classId = widget.classId;
   }
 
+  Future<void> refresh()async{
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -78,42 +84,57 @@ class _AdminViewNoticePageState extends State<AdminViewNotice>{
             ),
           ),
           Expanded(
-              child: StreamBuilder<List<NoticeModel>>(
-                  stream: _noticeController.getNotice(classId),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.waiting){
-                      return Center(child: CircularProgressIndicator());
-                    }
+              child: RefreshIndicator(
+                onRefresh: refresh,
+                child: StreamBuilder<List<NoticeModel>>(
+                    stream: _noticeController.getNotice(classId),
+                    builder: (context, snapshot){
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return Center(child: CircularProgressIndicator());
+                      }
 
-                    if(snapshot.hasError){
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    }
+                      if(snapshot.hasError){
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
 
-                    List<NoticeModel> notices = snapshot.data ?? [];
+                      List<NoticeModel> notices = snapshot.data ?? [];
 
-                    if(notices.isEmpty){
-                      return Center(child: Text('No notices available.'));
-                    }
+                      if(notices.isEmpty){
+                        return Center(child: Text('No notices available.'));
+                      }
 
-                    return ListView.builder(
-                        itemCount: notices.length,
-                        itemBuilder: (context, index){
-                          return Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: InkWell(
-                              onTap: (){
-                              },
-                              child: Card(
-                                child: ListTile(
-                                  title: Text(notices[index].title),
-                                  subtitle: Text(notices[index].description),
+                      return ListView.builder(
+                          itemCount: notices.length,
+                          itemBuilder: (context, index){
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: InkWell(
+                                onTap: (){
+                                },
+                                child: Card(
+                                  child: ListTile(
+                                    title: Text(notices[index].title),
+                                    subtitle: Text(notices[index].description),
+                                    trailing: IconButton(
+                                        onPressed: ()async{
+                                          CollectionReference collection = FirebaseFirestore.instance.collection('classes').doc(classId).collection('notices');
+                                          QuerySnapshot querySnapshot = await collection.get();
+                                          DocumentSnapshot documentSnapshot = querySnapshot.docs[index];
+
+                                          String documentId = documentSnapshot.id;
+                                          _noticeController.deleteNotice(classId, documentId);
+                                          refresh();
+                                        },
+                                        icon: Icon(Icons.delete)
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }
-                    );
-                  }
+                            );
+                          }
+                      );
+                    }
+                ),
               )
           )
         ],

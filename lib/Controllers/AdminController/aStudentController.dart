@@ -18,4 +18,7 @@ class StudentController{
       print('Error fetching data $e');
     }
   }
+  Future<void> deleteData(String docId, String subDocId){
+    return collection.doc(docId).collection('students').doc(subDocId).delete();
+  }
 }

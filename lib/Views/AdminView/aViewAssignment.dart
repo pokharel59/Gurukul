@@ -28,6 +28,12 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
     classId = widget.classId;
   }
 
+  Future<void> refresh()async {
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -78,43 +84,58 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
             ),
           ),
           Expanded(
-              child: StreamBuilder<List<AssignmentModel>>(
-                  stream: _assignmentController.getAssignment(classId),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.waiting){
-                      return Center(child: CircularProgressIndicator());
-                    }
+              child: RefreshIndicator(
+                onRefresh: refresh,
+                child: StreamBuilder<List<AssignmentModel>>(
+                    stream: _assignmentController.getAssignment(classId),
+                    builder: (context, snapshot){
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return Center(child: CircularProgressIndicator());
+                      }
 
-                    if(snapshot.hasError){
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    }
+                      if(snapshot.hasError){
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
 
-                    List<AssignmentModel> assignments = snapshot.data ?? [];
+                      List<AssignmentModel> assignments = snapshot.data ?? [];
 
-                    if(assignments.isEmpty){
-                      return Center(child: Text('No assignments available.'));
-                    }
+                      if(assignments.isEmpty){
+                        return Center(child: Text('No assignments available.'));
+                      }
 
-                    return ListView.builder(
-                        itemCount: assignments.length,
-                        itemBuilder: (context, index){
-                          return Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: InkWell(
-                              onTap: (){
-                              },
-                              child: Card(
-                                child: ListTile(
-                                  leading: Text(assignments[index].deadline),
-                                  title: Text(assignments[index].title),
-                                  subtitle: Text(assignments[index].description),
+                      return ListView.builder(
+                          itemCount: assignments.length,
+                          itemBuilder: (context, index){
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: InkWell(
+                                onTap: (){
+                                },
+                                child: Card(
+                                  child: ListTile(
+                                    leading: Text(assignments[index].deadline),
+                                    title: Text(assignments[index].title),
+                                    subtitle: Text(assignments[index].description),
+                                    trailing: IconButton(
+                                      onPressed: ()async{
+                                        CollectionReference collection = FirebaseFirestore.instance.collection('classes').doc(classId).collection('assignments');
+                                        QuerySnapshot querySnapshot = await collection.get();
+                                        DocumentSnapshot documentSnapshot = querySnapshot.docs[index];
+
+                                        String documentId = documentSnapshot.id;
+                                        _assignmentController.deleteAssignment(classId, documentId);
+                                        refresh();
+                                      },
+                                      icon: Icon(Icons.delete)
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }
-                    );
-                  }
+                            );
+                          }
+                      );
+                    }
+                ),
               )
           )
         ],

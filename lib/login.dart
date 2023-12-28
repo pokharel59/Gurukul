@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/messageToast.dart';
+import 'package:gurukul_mobile_app/Models/AdminModels/aStudentModel.dart';
+import 'package:gurukul_mobile_app/Models/AdminModels/aTeacherModel.dart';
+import 'package:gurukul_mobile_app/loginController.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,8 +12,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController ClassName = TextEditingController();
   TextEditingController StudentIDText = TextEditingController();
   TextEditingController PasswordText = TextEditingController();
+  LoginController loginController = LoginController();
   Toaster showMessage = Toaster();
 
   @override
@@ -55,11 +60,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Positioned(
-            bottom: 100,
+            bottom: 60,
             child: Container(
               margin: EdgeInsets.only(left: 15, right: 15),
               padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
-              height: 450,
+              height: 500,
               width: MediaQuery.sizeOf(context).width - 30,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -84,6 +89,34 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 30),
+                  Text("Class Name",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  //student id text input
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                      controller: ClassName,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Enter class name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        enabled: true,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 20),
                   //student id text
                   Text("Student ID",
                     style: TextStyle(
@@ -93,19 +126,22 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 10),
                   //student id text input
-                  TextField(
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                    controller: StudentIDText,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: '2210222027',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 20,
                       ),
-                      enabled: true,
+                      controller: StudentIDText,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: '2210222027',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        enabled: true,
+                      ),
                     ),
                   ),
 
@@ -119,23 +155,26 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 10),
                   //password input
-                  TextField(
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                    controller: PasswordText,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: '*********',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 20,
                       ),
-                      enabled: true,
+                      controller: PasswordText,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: '*********',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        enabled: true,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 2),
 
                   //forgot password text
                   Container(
@@ -151,25 +190,36 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  SizedBox(height: 40),
+                  SizedBox(height: 20),
 
                   //login button
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: ()async {
                       String enteredID = StudentIDText.text.trim();
                       String enteredPassword = PasswordText.text.trim();
+                      String enteredClassName = ClassName.text;
 
                       if (enteredID == null || enteredID.isEmpty || enteredPassword == null || enteredPassword.isEmpty) {
                         showMessage.showToast('Field cannot be empty');
                       } else {
-                        if (enteredID == 'admin' && enteredPassword == 'admin') {
-                          Navigator.pushReplacementNamed(context, '/adminPage');
-                          showMessage.showToast('Login successful');
-                        } else if (enteredID == '2210112027' && enteredPassword == 'student') {
-                          Navigator.pushReplacementNamed(context, '/home');
-                          showMessage.showToast('Login successful');
-                        } else {
-                          showMessage.showToast('Error login');
+                        String? documentID = await loginController.getDocumentIDByClassName(enteredClassName);
+
+                        if(documentID != null){
+                          List<StudentModel> students = await loginController.fetchStudentData(documentID);
+                          List<TeacherModel> teachers = await loginController.fetchSTeacherData(documentID);
+
+                          if(students.any((student) => student.id == enteredID && student.password == enteredPassword)){
+                            Navigator.pushReplacementNamed(context, '/home');
+                            showMessage.showToast('Login successful');
+                          }if(teachers.any((teacher) => teacher.id == enteredID && teacher.password == enteredPassword)){
+                            Navigator.pushReplacementNamed(context, '/adminPage');
+                            showMessage.showToast('Login successful');
+                          }else{
+                            showMessage.showToast('Error login');
+                          }
+
+                        }else{
+                          showMessage.showToast('Document ID did not found');
                         }
                       }
                     },

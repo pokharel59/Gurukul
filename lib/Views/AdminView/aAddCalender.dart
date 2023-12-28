@@ -178,7 +178,9 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                                     eventType: selectedItem
                                 );
 
-
+                                calenderController.addCalenderEvent(classId, calenderModel);
+                                eventTitle.clear();
+                                Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue, // Background color

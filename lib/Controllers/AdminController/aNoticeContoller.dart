@@ -19,4 +19,8 @@ class NoticeController{
       print('Error fetching data $e');
     }
   }
+
+  Future<void> deleteNotice(String documentId, String subDocumentId){
+    return collectionReference.doc(documentId).collection('notices').doc(subDocumentId).delete();
+  }
 }

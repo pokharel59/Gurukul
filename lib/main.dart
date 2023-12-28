@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gurukul_mobile_app/Components/adminButtonNav.dart';
-import 'package:gurukul_mobile_app/Views/AdminView/aAddAsignment.dart';
-import 'package:gurukul_mobile_app/Views/AdminView/aAddCalender.dart';
-import 'package:gurukul_mobile_app/Views/AdminView/aAddNotice.dart';
-import 'package:gurukul_mobile_app/Views/AdminView/aAddStudent.dart';
-import 'package:gurukul_mobile_app/Views/AdminView/aAddTeacher.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aCreateClass.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aViewClass.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -31,20 +25,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/adminPage',
+      initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(),
         '/home': (context) => MyHomePage(),
         '/adminPage': (context) => AdminViewClass(),
-        '/createClass': (context) => AdminCreateClass(),
-        //'/createAssignment': (context) => AdminAssignmentPage(),
-        //'/createCalender': (context) => AdminCalenderPage(),
-        //'/createNotice': (context) => AdminNoticePage(),
+        '/createClass': (context) => AdminCreateClass()
         //'/adminHome': (context) => AdminBottomNav()
-        //'/createStudent': (context) => AdminStudent(),
-        //'/createTeacher': (context) => AdminTeacherPageState(),
       },
-      home: AdminViewClass(),
+      home: LoginPage(),
     );
   }
 }

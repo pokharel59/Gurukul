@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/messageToast.dart';
 import 'package:gurukul_mobile_app/Controllers/AdminController/aClassController.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aClassModel.dart';
-import 'package:file_picker/file_picker.dart';
-
 import '../../Components/customAppBar.dart';
 
 class AdminCreateClass extends StatefulWidget{
@@ -64,37 +62,6 @@ class _AdminCreateClassPageState extends State<AdminCreateClass>{
                       hintStyle: TextStyle(color: Color(0xFF808080))
                   ),
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 10.0),
-                          child: Container(
-                            width: 100,
-                            height: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: const Color(0xFFF2F2F2)
-                            ),
-                            child: Row(
-                              children: [
-                                Text('Class', textAlign: TextAlign.center,),
-                                IconButton(
-                                    onPressed: (){
-
-                                    },
-                                    icon: Icon(Icons.cancel_rounded)
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -143,37 +110,6 @@ class _AdminCreateClassPageState extends State<AdminCreateClass>{
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 10.0),
-                              child: Container(
-                                width: 100,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: const Color(0xFFF2F2F2)
-                                ),
-                                child: Row(
-                                  children: [
-                                    Text('Subject', textAlign: TextAlign.center,),
-                                    IconButton(
-                                        onPressed: (){
-
-                                        },
-                                        icon: Icon(Icons.cancel_rounded)
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -216,6 +152,8 @@ class _AdminCreateClassPageState extends State<AdminCreateClass>{
                               );
 
                                   _classController.addClass(newClass);
+                                  classNameController.clear();
+                                  Navigator.pop(context);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.blue, // Background color

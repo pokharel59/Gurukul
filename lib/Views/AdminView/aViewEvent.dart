@@ -31,6 +31,10 @@ class _AdminViewEventPageState extends State<AdminViewEvents>{
     classId = widget.classId;
   }
 
+  Future<void> refresh() async {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -81,49 +85,69 @@ class _AdminViewEventPageState extends State<AdminViewEvents>{
             ),
           ),
           Expanded(
-              child: StreamBuilder<List<EventModel>>(
-                  stream: _eventController.getEvent(classId),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.waiting){
-                      return Center(child: CircularProgressIndicator());
-                    }
+              child: RefreshIndicator(
+                onRefresh: refresh,
+                child: StreamBuilder<List<EventModel>>(
+                    stream: _eventController.getEvent(classId),
+                    builder: (context, snapshot){
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return Center(child: CircularProgressIndicator());
+                      }
 
-                    if(snapshot.hasError){
+                      if(snapshot.hasError){
 
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    }
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
 
-                    List<EventModel> events = snapshot.data ?? [];
+                      List<EventModel> events = snapshot.data ?? [];
 
-                    if(events.isEmpty){
-                      return Center(child: Text('No events available.'));
-                    }
+                      if(events.isEmpty){
+                        return Center(child: Text('No events available.'));
+                      }
 
-                    return ListView.builder(
-                        itemCount: events.length,
-                        itemBuilder: (context, index){
-                          return Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: InkWell(
-                              onTap: (){
-                              },
-                              child: Card(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(events[index].title),
-                                    Text(events[index].description),
-                                    Text(events[index].eventDate.toString()),
-                                    Text(events[index].location),
-                                    Text(events[index].eventStatus),
-                                  ],
+                      return ListView.builder(
+                          itemCount: events.length,
+                          itemBuilder: (context, index){
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: InkWell(
+                                onTap: (){
+                                },
+                                child: Card(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(events[index].title),
+                                      Text(events[index].description),
+                                      Text(events[index].eventDate.toString()),
+                                      Text(events[index].location),
+                                      Text(events[index].eventStatus),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                              onPressed: ()async{
+                                                CollectionReference collection = FirebaseFirestore.instance.collection('classes').doc(classId).collection('events');
+                                                QuerySnapshot querySnapshot = await collection.get();
+                                                DocumentSnapshot documentSnapshot = querySnapshot.docs[index];
+
+                                                String documentId = documentSnapshot.id;
+                                                _eventController.deleteEvent(classId, documentId);
+                                                refresh();
+                                              },
+                                              icon: Icon(Icons.delete)
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }
-                    );
-                  }
+                            );
+                          }
+                      );
+                    }
+                ),
               )
           )
         ],

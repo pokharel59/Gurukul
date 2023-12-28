@@ -12,7 +12,7 @@ class CustomAppBar<T> extends StatelessWidget implements PreferredSizeWidget{
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
         onPressed: () {
-          Navigator.pushReplacementNamed(context, '/login');
+          Navigator.pop(context);
         },
       ),
       title: Text(

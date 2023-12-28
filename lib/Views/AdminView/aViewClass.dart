@@ -105,6 +105,17 @@ class _AdminViewClassPageState extends State<AdminViewClass>{
                               child: ListTile(
                                 title: Text(classes[index].className),
                                 subtitle: Text('Subjects: ${classes[index].subjectName.join(", ")}'),
+                                trailing: IconButton(
+                                    onPressed: ()async{
+                                      CollectionReference collection = FirebaseFirestore.instance.collection('classes');
+                                      QuerySnapshot querySnapshot = await collection.get();
+                                      DocumentSnapshot documentSnapshot = querySnapshot.docs[index];
+
+                                      String documentId = documentSnapshot.id;
+                                      _classController.deleteClass(documentId);
+                                    },
+                                    icon: Icon(Icons.delete)
+                                ),
                               ),
                             ),
                           ),

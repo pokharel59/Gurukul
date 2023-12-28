@@ -19,4 +19,8 @@ class AssignmentController{
       print('Error fetching data $e');
     }
   }
+
+  Future<void> deleteAssignment(String documentId, String subDocumentId){
+      return collectionReference.doc(documentId).collection('assignments').doc(subDocumentId).delete();
+  }
 }

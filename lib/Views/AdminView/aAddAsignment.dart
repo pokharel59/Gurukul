@@ -220,6 +220,9 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
                                 );
 
                                 assignmentController.addAssignment(classId, assignmentModel);
+                                assignmentTitle.clear();
+                                assignmentDescription.clear();
+                                Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue, // Background color
@@ -230,27 +233,6 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
                                 ),
                               ),
                               child: Text('Create')
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('View Assignment', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 10.0),
-                        child: SizedBox(
-                          height: 70,
-                          width: 360,
-                          child: Card(
-                            child: ListTile(
-                              leading: Text('Welcome'),
-                            ),
                           ),
                         ),
                       )

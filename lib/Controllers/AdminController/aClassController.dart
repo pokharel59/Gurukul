@@ -15,4 +15,8 @@ class ClassController{
           .toList();
     });
   }
+
+  Future<void> deleteClass(String documentId){
+    return classesCollection.doc(documentId).delete();
+  }
 }

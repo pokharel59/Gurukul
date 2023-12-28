@@ -19,4 +19,8 @@ class EventController{
       print('Error fetching data $e');
     }
   }
+
+  Future<void> deleteEvent(String documentId, String subDocumentId){
+    return collectionReference.doc(documentId).collection('events').doc(subDocumentId).delete();
+  }
 }

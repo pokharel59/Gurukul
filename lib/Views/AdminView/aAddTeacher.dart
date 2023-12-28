@@ -201,6 +201,10 @@ class _AdminTeacherPageState extends State<AdminTeacher>{
                                   password: _teacherPassword.text);
 
                               teacherController.addTeacher(classId, teacherModel);
+                              _teacherId.clear();
+                              _teacherName.clear();
+                              _teacherPassword.clear();
+                              Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blue, // Background color
@@ -217,44 +221,6 @@ class _AdminTeacherPageState extends State<AdminTeacher>{
                   ],
                 ),
               ),
-              SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Text('View Teachers', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w500 ),),
-                    ],
-                  ),
-                  Expanded(
-                    child: StreamBuilder(
-                        stream: teacherController.getTeacher(classId),
-                        builder: (context, snapshot){
-                          if(snapshot.connectionState == ConnectionState.waiting){
-                            return Center(child: CircularProgressIndicator());
-                          }if(snapshot.hasError){
-                            print('Error fetching data');
-                          }
-                          List<TeacherModel> teachers = snapshot.data ?? [];
-
-                          if(teachers.isEmpty){
-                            return Center(child: Text('No Teachers available'));
-                          }else{
-                            return ListView.builder(
-                              itemCount: teachers.length,
-                                itemBuilder: (context, index){
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Card(
-                                        child: ListTile(
-                                          title: Text(teachers[index].name),
-                                          subtitle: Text(teachers[index].id),
-                                        ),
-                                      ),
-                                    );
-                                }
-                            );
-                          }
-                        }
-                    ),
-                  )
             ],
           ),
         )

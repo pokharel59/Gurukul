@@ -245,6 +245,10 @@ class _AdminEventPageState extends State<AdminEventPage>{
                                 );
 
                                 eventController.addEvent(classId, eventModel);
+                                eventTitle.clear();
+                                eventDescription.clear();
+                                eventLocation.clear();
+                                Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue, // Background color

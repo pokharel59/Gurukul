@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddAsignment.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddCalender.dart';
+import 'package:gurukul_mobile_app/Views/AdminView/aAddStudent.dart';
+import 'package:gurukul_mobile_app/Views/AdminView/aAddTeacher.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aViewAssignment.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aViewEvent.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aViewNotice.dart';
+import 'package:gurukul_mobile_app/Views/AdminView/viewTeacherStudent.dart';
 
 import '../Views/AdminView/aAddNotice.dart';
 
@@ -28,6 +31,7 @@ class _AdminBottomNavState extends State<AdminBottomNav> {
       AdminViewAssignments(classId: classId),
        AdminViewEvents(classId: classId),
       AdminCalenderPage(classId: classId),
+       AdminViewTeacherStudent(classId: classId)
     ];
   }
 
@@ -58,6 +62,10 @@ class _AdminBottomNavState extends State<AdminBottomNav> {
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month, color: Colors.black),
             label: 'Page 4',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people_rounded, color: Colors.black),
+            label: 'Page 5',
           ),
         ],
       ),

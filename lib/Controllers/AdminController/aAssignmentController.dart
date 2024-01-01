@@ -23,4 +23,12 @@ class AssignmentController{
   Future<void> deleteAssignment(String documentId, String subDocumentId){
       return collectionReference.doc(documentId).collection('assignments').doc(subDocumentId).delete();
   }
+
+  Future<void> updateAssignment(String documentId, String subDocumentId, AssignmentModel updatedAssignment) {
+      return collectionReference
+          .doc(documentId)
+          .collection('assignments')
+          .doc(subDocumentId)
+          .update(updatedAssignment.toMap());
+    }
 }

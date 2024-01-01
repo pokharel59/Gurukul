@@ -19,4 +19,10 @@ class ClassController{
   Future<void> deleteClass(String documentId){
     return classesCollection.doc(documentId).delete();
   }
+
+  Future<void> updateClass(String documentId, ClassModel updateclass) {
+    return classesCollection
+        .doc(documentId)
+        .update(updateclass.toMap());
+  }
 }

@@ -11,7 +11,6 @@ class AdminCreateClass extends StatefulWidget{
 
 class _AdminCreateClassPageState extends State<AdminCreateClass>{
   final TextEditingController classNameController = TextEditingController();
-  final TextEditingController subjectNameController = TextEditingController();
   final ClassController _classController = ClassController();
   final List<TextEditingController> subjectControllers = [];
   Toaster showMessage = Toaster();
@@ -119,7 +118,7 @@ class _AdminCreateClassPageState extends State<AdminCreateClass>{
                             padding: const EdgeInsets.only(right: 8.0),
                             child: ElevatedButton(
                                 onPressed: (){
-                                  Navigator.pop(context);
+                                  //Navigator.pop(context);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.white, // Background color
@@ -153,7 +152,8 @@ class _AdminCreateClassPageState extends State<AdminCreateClass>{
 
                                   _classController.addClass(newClass);
                                   classNameController.clear();
-                                  Navigator.pop(context);
+                                  subjectControllers.clear();
+                                  //Navigator.pop(context);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.blue, // Background color

@@ -1,10 +1,11 @@
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/customAppBar.dart';
-import 'package:gurukul_mobile_app/Controllers/AdminController/aAssignmentController.dart';
 import 'package:gurukul_mobile_app/Controllers/AdminController/aEventController.dart';
-import 'package:gurukul_mobile_app/Models/AdminModels/aAssignmentModel.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aEventModel.dart';
+import 'package:intl/intl.dart';
 
 class AdminEventPage extends StatefulWidget{
   final String classID;
@@ -21,6 +22,7 @@ class _AdminEventPageState extends State<AdminEventPage>{
   final TextEditingController eventDescription = TextEditingController();
   final TextEditingController eventLocation = TextEditingController();
   final EventController eventController = EventController();
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
   void initState(){
     super.initState();
@@ -61,9 +63,81 @@ class _AdminEventPageState extends State<AdminEventPage>{
     }
   }
 
+  Image? previewImage;
+  List<File> _files = [];
+
   Future<void> getFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    if(result != null){
+      _files = result.files.map((file) => File(file.path!)).toList();
+      setState(() {
+        previewImage = Image.file(
+          _files.first,
+          width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+        );
+      });
+    }
   }
+
+  Future<void> uploadDataFile()async{
+    if(_files == null && _files.isEmpty){
+      print("Ther is not file");
+    }
+
+    String downloadedUrl = "";
+
+    try{
+      for(File file in _files){
+        String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+        Reference ref = firebaseStorage.ref().child('files/$file');
+        String contentType = _getContentType(file.path);
+        SettableMetadata settableMetadata = SettableMetadata(contentType: contentType);
+        UploadTask uploadTask = ref.putFile(file, settableMetadata);
+
+        TaskSnapshot taskSnapshot = await uploadTask;
+
+        String fileUrl = await taskSnapshot.ref.getDownloadURL();
+        downloadedUrl = fileUrl;
+      }
+
+      print("Download URLs: $downloadedUrl");
+
+      String formatedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(selectDateTime);
+      EventModel eventModel = EventModel(
+          title: eventTitle.text,
+          description: eventDescription.text,
+          eventDate: formatedDate,
+          location: eventLocation.text,
+          eventStatus: selectedItem,
+        documentUrl: downloadedUrl
+      );
+
+      eventController.addEvent(classId, eventModel);
+      eventTitle.clear();
+      eventDescription.clear();
+      eventLocation.clear();
+      Navigator.pop(context);
+    }catch(e){
+      print('Error uploading data $e');
+    }
+  }
+
+  String _getContentType(String filePath){
+    Map<String, String> contentTypeMap = {
+      'pdf': 'application/pdf',
+      'doc' : 'application/msword',
+      'docx' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'jpeg': 'image/jpeg',
+      'jpg': 'image/jpeg',
+      'png': 'image/png',
+    };
+    String extension = filePath.split('.').last.toLowerCase();
+
+    return contentTypeMap[extension] ?? 'application/octet-stream';
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -189,22 +263,38 @@ class _AdminEventPageState extends State<AdminEventPage>{
                     onTap: (){
                       getFiles();
                     },
-                    child: Container(
-                      width: 500,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF2F2F2),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 16.0),
-                        child: Column(
-                          children: [
-                            Icon(Icons.upload_file, color: Colors.black),
-                            Text('Upload Files/Image'),
-                          ],
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 250,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF2F2F2),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 16.0),
+                            child: Column(
+                              children: [
+                                Icon(Icons.upload_file, color: Colors.black),
+                                Text('Upload Files/Image'),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14.0),
+                          child: Container(
+                            height: 80,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF2F2F2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: previewImage,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   SizedBox(height: 20),
@@ -216,7 +306,7 @@ class _AdminEventPageState extends State<AdminEventPage>{
                           padding: const EdgeInsets.only(right: 8.0),
                           child: ElevatedButton(
                               onPressed: (){
-
+                                Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.white, // Background color
@@ -236,19 +326,7 @@ class _AdminEventPageState extends State<AdminEventPage>{
                           padding: const EdgeInsets.only(left: 8.0),
                           child: ElevatedButton(
                               onPressed: () {
-                                EventModel eventModel = EventModel(
-                                    title: eventTitle.text,
-                                    description: eventDescription.text,
-                                    eventDate: selectDateTime.day,
-                                    location: eventLocation.text,
-                                    eventStatus: selectedItem
-                                );
-
-                                eventController.addEvent(classId, eventModel);
-                                eventTitle.clear();
-                                eventDescription.clear();
-                                eventLocation.clear();
-                                Navigator.pop(context);
+                                uploadDataFile();
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue, // Background color

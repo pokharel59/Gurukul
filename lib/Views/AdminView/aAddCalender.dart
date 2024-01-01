@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/customAppBar.dart';
 import 'package:gurukul_mobile_app/Controllers/AdminController/aCalenderController.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aCalenderModel.dart';
+import 'package:intl/intl.dart';
 
 class AdminCalenderPage extends StatefulWidget{
   final String classId;
@@ -56,9 +57,6 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
     }
   }
 
-  Future<void> getFiles() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
-  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -172,15 +170,15 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                           padding: const EdgeInsets.only(left: 8.0),
                           child: ElevatedButton(
                               onPressed: () {
+                                String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(selectDateTime);
                                 CalenderModel calenderModel = CalenderModel(
-                                    calenderDate: selectDateTime.day,
+                                    calenderDate: formattedDate,
                                     eventTitle: eventTitle.text,
                                     eventType: selectedItem
                                 );
 
                                 calenderController.addCalenderEvent(classId, calenderModel);
                                 eventTitle.clear();
-                                Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue, // Background color
@@ -193,43 +191,6 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                               child: Text('Create')
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('View Events', style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),),
-                        ],
-                      ),
-                      StreamBuilder(
-                          stream: calenderController.getCalenderEvent(classId),
-                          builder: (context, snapshot){
-                            if(snapshot.connectionState == ConnectionState.waiting){
-                              return Center(child: CircularProgressIndicator());
-                            }if(snapshot.hasError){
-                              print('Error fetching data ${snapshot.error}');
-                            }
-
-                            List<CalenderModel> calenders = snapshot.data ?? [];
-                            if(calenders.isEmpty){
-                              return Text('No events available');
-                            }else{
-                              return ListView.builder(
-                                  itemCount: calenders.length,
-                                  itemBuilder: (context, index){
-                                    return Card(
-                                      child: ListTile(
-                                        title: Text(calenders[index].eventTitle),
-                                        subtitle: Text(calenders[index].eventType),
-                                        trailing: Text(calenders[index].calenderDate as String),
-                                      ),
-                                    );
-                                  }
-                              );
-                            }
-                          }
                       )
                     ],
                   ),

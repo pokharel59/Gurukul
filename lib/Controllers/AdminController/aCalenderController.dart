@@ -19,4 +19,16 @@ class CalenderController{
       print('Error fetching data: $e');
     }
   }
+
+  Future<void> deleteCalender(String documentId, String subDocumentId){
+    return collectionReference.doc(documentId).collection('academicCalender').doc(subDocumentId).delete();
+  }
+
+  Future<void> updateCalender(String documentId, String subDocumentId, CalenderModel updateCalender) {
+    return collectionReference
+        .doc(documentId)
+        .collection('academicCalender')
+        .doc(subDocumentId)
+        .update(updateCalender.toMap());
+  }
 }

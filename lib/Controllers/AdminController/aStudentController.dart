@@ -21,4 +21,12 @@ class StudentController{
   Future<void> deleteData(String docId, String subDocId){
     return collection.doc(docId).collection('students').doc(subDocId).delete();
   }
+
+  Future<void> updateData(String documentId, String subDocumentId, StudentModel studentModel){
+    return collection
+        .doc(documentId)
+        .collection('students')
+        .doc(subDocumentId)
+        .update(studentModel.toMap());
+  }
 }

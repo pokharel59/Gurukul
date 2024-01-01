@@ -22,4 +22,12 @@ class TeacherController{
   Future<void> deleteData(String docId, String subDocId){
     return collectionTeacher.doc(docId).collection('teachers').doc(subDocId).delete();
   }
+
+  Future<void> updateData(String documentId, String subDocumentId, TeacherModel teacherModel){
+    return collectionTeacher
+        .doc(documentId)
+        .collection('teachers')
+        .doc(subDocumentId)
+        .update(teacherModel.toMap());
+  }
 }

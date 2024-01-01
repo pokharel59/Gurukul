@@ -1,11 +1,12 @@
 class EventModel{
   final String title;
   final String description;
-  final int eventDate;
+  final String eventDate;
   final String location;
   final String eventStatus;
+  final String documentUrl;
 
-  EventModel({required this.title, required this.description, required this.eventDate, required this.location, required this.eventStatus});
+  EventModel({required this.title, required this.description, required this.eventDate, required this.location, required this.eventStatus, required this.documentUrl});
 
   Map<String, dynamic> toMap(){
     return{
@@ -13,7 +14,8 @@ class EventModel{
       'description':description,
       'eventDate':eventDate,
       'location':location,
-      'eventStatus':eventStatus
+      'eventStatus':eventStatus,
+      'documentUrl':documentUrl
     };
   }
 
@@ -23,7 +25,8 @@ class EventModel{
         description: map['description'],
         eventDate: map['eventDate'],
         location: map['location'],
-        eventStatus: map['eventStatus']
+        eventStatus: map['eventStatus'],
+      documentUrl: map['documentUrl']
     );
   }
 }

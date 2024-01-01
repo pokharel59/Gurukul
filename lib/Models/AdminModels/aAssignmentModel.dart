@@ -3,15 +3,17 @@ class AssignmentModel{
   final String description;
   final String subject;
   final String deadline;
+  final String documentUrl;
 
-  AssignmentModel({required this.title, required this.description, required this.subject, required this.deadline});
+  AssignmentModel({required this.title, required this.description, required this.subject, required this.deadline, required this.documentUrl});
 
   Map<String, dynamic> toMap(){
     return {
       'title': title,
       'description': description,
       'subject': subject,
-      'deadline':deadline
+      'deadline':deadline,
+      'documentUrl':documentUrl
     };
   }
 
@@ -20,7 +22,8 @@ class AssignmentModel{
         title: map['title'],
         description: map['description'],
         subject: map['subject'],
-        deadline: map['deadline']
+        deadline: map['deadline'],
+      documentUrl: map['documentUrl']
     );
   }
 

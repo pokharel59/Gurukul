@@ -23,4 +23,12 @@ class EventController{
   Future<void> deleteEvent(String documentId, String subDocumentId){
     return collectionReference.doc(documentId).collection('events').doc(subDocumentId).delete();
   }
+
+  Future<void> updateEvent(String documentId, String subDocumentId, EventModel updateEvent) {
+    return collectionReference
+        .doc(documentId)
+        .collection('events')
+        .doc(subDocumentId)
+        .update(updateEvent.toMap());
+  }
 }

@@ -23,4 +23,12 @@ class NoticeController{
   Future<void> deleteNotice(String documentId, String subDocumentId){
     return collectionReference.doc(documentId).collection('notices').doc(subDocumentId).delete();
   }
+
+  Future<void> updateNotice(String documentId, String subDocumentId, NoticeModel noticeModel) {
+    return collectionReference
+        .doc(documentId)
+        .collection('notices')
+        .doc(subDocumentId)
+        .update(noticeModel.toMap());
+  }
 }

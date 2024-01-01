@@ -1,5 +1,5 @@
 class CalenderModel{
-  final int calenderDate;
+  final String calenderDate;
   final String eventTitle;
   final String eventType;
 

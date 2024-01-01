@@ -4,6 +4,7 @@ import 'package:gurukul_mobile_app/Views/AdminView/aAddCalender.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddStudent.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddTeacher.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aViewAssignment.dart';
+import 'package:gurukul_mobile_app/Views/AdminView/aViewCalender.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aViewEvent.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aViewNotice.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/viewTeacherStudent.dart';
@@ -30,7 +31,7 @@ class _AdminBottomNavState extends State<AdminBottomNav> {
       AdminViewNotice(classId: classId),
       AdminViewAssignments(classId: classId),
        AdminViewEvents(classId: classId),
-      AdminCalenderPage(classId: classId),
+      ViewCalender(classId: classId),
        AdminViewTeacherStudent(classId: classId)
     ];
   }

@@ -185,9 +185,9 @@ class _ViewCalenderState extends State<ViewCalender>{
                             padding: const EdgeInsets.only(left: 8.0),
                             child: ElevatedButton(
                                 onPressed: () {
-                                  String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(selectDateTime);
+                                  //String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(selectDateTime);
                                   CalenderModel calenderModel = CalenderModel(
-                                      calenderDate: formattedDate,
+                                      calenderDate: selectDateTime,
                                       eventTitle: eventTitle.text,
                                       eventType: selectedItem
                                   );
@@ -297,17 +297,17 @@ class _ViewCalenderState extends State<ViewCalender>{
                                   DocumentSnapshot documentSnapshot = querySnapshot.docs[index];
 
                                   String documentId = documentSnapshot.id;
-                                  DateTime formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(events[index].calenderDate);
+                                  //DateTime formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(events[index].calenderDate);
                                   editCalender(
                                       events[index].eventTitle,
                                       events[index].eventType,
-                                      formattedDate,
+                                      events[index].calenderDate,
                                       documentId
                                   );
                                 },
                                 child: Card(
                                   child: ListTile(
-                                    leading: Text(events[index].calenderDate),
+                                    leading: Text(events[index].calenderDate.toString()),
                                     title: Text(events[index].eventTitle),
                                     subtitle: Text(events[index].eventType),
                                     trailing: IconButton(

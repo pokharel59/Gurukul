@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/messageToast.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aStudentModel.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aTeacherModel.dart';
+import 'package:gurukul_mobile_app/Views/StudentView/sAssignment.dart';
+import 'package:gurukul_mobile_app/Views/StudentView/sHome.dart';
 import 'package:gurukul_mobile_app/loginController.dart';
+import 'package:gurukul_mobile_app/main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -209,7 +212,9 @@ class _LoginPageState extends State<LoginPage> {
                           List<TeacherModel> teachers = await loginController.fetchSTeacherData(documentID);
 
                           if(students.any((student) => student.id == enteredID && student.password == enteredPassword)){
-                            Navigator.pushReplacementNamed(context, '/home');
+                            Navigator.push(context, 
+                                MaterialPageRoute(builder: (context) => MyHomePage(classId: documentID, studentID: students.first.id, studentName: students.first.name,))
+                            );
                             showMessage.showToast('Login successful');
                           }if(teachers.any((teacher) => teacher.id == enteredID && teacher.password == enteredPassword)){
                             Navigator.pushReplacementNamed(context, '/adminPage');

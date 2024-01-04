@@ -116,6 +116,7 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
         subject: selectedItem,
         deadline: formattedDeadline,
         documentUrl: downloadURLs,
+        studentSubmittion: []
       );
 
       // Print the AssignmentModel for debugging

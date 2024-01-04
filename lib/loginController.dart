@@ -3,8 +3,6 @@ import 'package:gurukul_mobile_app/Models/AdminModels/aStudentModel.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aTeacherModel.dart';
 
 class LoginController{
-  final String className = 'class 8';
-
   CollectionReference collectionReference = FirebaseFirestore.instance.collection('classes');
 
   Future<String?> getDocumentIDByClassName(String className)async{

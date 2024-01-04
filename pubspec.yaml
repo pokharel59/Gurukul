@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  table_calendar: ^3.0.8
+  table_calendar: ^3.0.9
   salomon_bottom_bar: ^3.3.2
   bottom_navy_bar: ^6.0.0
 

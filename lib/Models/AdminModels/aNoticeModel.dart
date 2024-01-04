@@ -1,15 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NoticeModel{
   final String title;
   final String description;
   final String documentUrl;
+  final DateTime currentDate;
 
-  NoticeModel({required this.title, required this.description, required this.documentUrl});
+  NoticeModel({required this.title, required this.description, required this.documentUrl, required this.currentDate});
 
   Map<String, dynamic> toMap(){
     return {
       'title': title,
       'description': description,
-      'documentUrl': documentUrl
+      'documentUrl': documentUrl,
+      'currentDate': Timestamp.fromDate(currentDate)
     };
   }
 
@@ -17,7 +21,8 @@ class NoticeModel{
     return NoticeModel(
         title: map['title'],
         description: map['description'],
-      documentUrl: map['documentUrl']
+      documentUrl: map['documentUrl'],
+      currentDate: map['currentDate'].toDate()
     );
   }
 

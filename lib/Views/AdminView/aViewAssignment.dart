@@ -104,7 +104,8 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
               description: assignmentDescription.text,
               subject: selectedItem,
               deadline: formattedDate,
-              documentUrl: downloadURLs
+              documentUrl: downloadURLs,
+            studentSubmittion: []
           );
           _assignmentController.updateAssignment(classId, subDocumentId, assignmentModel);
           Navigator.pop(context);

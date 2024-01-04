@@ -6,6 +6,7 @@ import 'Views/StudentView/sAssignment.dart';
 import 'Views/StudentView/sCalendar.dart';
 import 'Views/StudentView/sEvent.dart';
 import 'Views/StudentView/sHome.dart';
+import 'Views/StudentView/sNotice.dart';
 import 'login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -28,30 +29,47 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(),
-        '/home': (context) => MyHomePage(),
+        //'/home': (context) => MyHomePage(),
         '/adminPage': (context) => AdminViewClass(),
         '/createClass': (context) => AdminCreateClass()
         //'/adminHome': (context) => AdminBottomNav()
       },
       home: LoginPage(),
+
     );
   }
 }
 
 class MyHomePage extends StatefulWidget{
+  final String classId;
+  final String studentName;
+  final String studentID;
+
+  MyHomePage({required this.classId, required this.studentName, required this.studentID});
   @override
   _MyHomePage createState() => _MyHomePage();
 }
 
 class _MyHomePage extends State<MyHomePage>{
   int _currentIndex = 0;
+  late String classId;
+  late String studentName;
+  late String studentID;
+  late List<Widget> _pages;
 
-  List _pages = [
-    HomePage(),
-    CalendarPage(),
-    AssignmentPage(),
-    EventPage(),
-  ];
+  void initState(){
+    super.initState();
+    classId = widget.classId;
+    studentName = widget.studentName;
+    studentID = widget.studentID;
+    _pages = [
+      HomePage(),
+      CalendarPage(classId: classId),
+      AssignmentPage(classId: classId, studentName: studentName, studentID: studentID),
+      EventPage(),
+      NoticePage(classId: classId)
+    ];
+  }
 
   @override
   Widget build(BuildContext context){
@@ -83,6 +101,11 @@ class _MyHomePage extends State<MyHomePage>{
             SalomonBottomBarItem(
               icon: Icon(Icons.event),
               title: Text("Events"),
+              selectedColor: Colors.deepPurple,
+            ),
+            SalomonBottomBarItem(
+              icon: Icon(Icons.notifications),
+              title: Text("Notice"),
               selectedColor: Colors.deepPurple,
             ),
           ],

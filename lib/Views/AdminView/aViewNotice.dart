@@ -98,7 +98,8 @@ class _AdminViewNoticePageState extends State<AdminViewNotice>{
           NoticeModel noticeModel = NoticeModel(
               title: noticeTitle.text,
               description: noticeDescription.text,
-              documentUrl: downloadURLs
+              documentUrl: downloadURLs,
+            currentDate: DateTime.now()
           );
           _noticeController.updateNotice(classId, subDocumentId, noticeModel);
           Navigator.pop(context);
@@ -129,6 +130,7 @@ class _AdminViewNoticePageState extends State<AdminViewNotice>{
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     children: [
@@ -343,11 +345,9 @@ class _AdminViewNoticePageState extends State<AdminViewNotice>{
 
                       List<NoticeModel> notices = snapshot.data ?? [];
 
-                      if(notices.isEmpty){
-                        return Center(child: Text('No notices available.'));
-                      }
-
-                      return ListView.builder(
+                      return notices.isEmpty
+                        ? Center(child: Text('No notices available.'))
+                      : ListView.builder(
                           itemCount: notices.length,
                           itemBuilder: (context, index){
                             return Padding(

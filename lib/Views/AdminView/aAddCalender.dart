@@ -170,9 +170,9 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                           padding: const EdgeInsets.only(left: 8.0),
                           child: ElevatedButton(
                               onPressed: () {
-                                String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(selectDateTime);
+                                //String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(selectDateTime);
                                 CalenderModel calenderModel = CalenderModel(
-                                    calenderDate: formattedDate,
+                                    calenderDate: selectDateTime,
                                     eventTitle: eventTitle.text,
                                     eventType: selectedItem
                                 );

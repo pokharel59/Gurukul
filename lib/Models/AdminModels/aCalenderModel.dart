@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class CalenderModel{
-  final String calenderDate;
+  final DateTime calenderDate;
   final String eventTitle;
   final String eventType;
 
@@ -7,7 +9,7 @@ class CalenderModel{
 
   Map<String, dynamic> toMap(){
     return{
-      'calenderDate': calenderDate,
+      'calenderDate': Timestamp.fromDate(calenderDate),
       'eventTitle': eventTitle,
       'eventType': eventType
     };
@@ -15,7 +17,7 @@ class CalenderModel{
 
   factory CalenderModel.fromMap(Map<String, dynamic> map){
     return CalenderModel(
-        calenderDate: map['calenderDate'],
+        calenderDate: map['calenderDate'].toDate(),
         eventTitle: map['eventTitle'],
         eventType: map['eventType']
     );

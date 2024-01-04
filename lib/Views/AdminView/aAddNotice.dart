@@ -70,7 +70,8 @@ Future<void> uploadDataFile()async{
       NoticeModel noticeModel = NoticeModel(
         title: noticeTitle.text,
         description: noticeDescription.text,
-        documentUrl: downloadedUrl
+        documentUrl: downloadedUrl,
+          currentDate: DateTime.now()
       );
 
       noticeController.addNotice(classId, noticeModel);

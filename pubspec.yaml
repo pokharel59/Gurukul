@@ -48,7 +48,9 @@ dependencies:
   cloud_firestore:
   intl_utils:
   firebase_storage:
-
+  loading_animation_widget:
+  cached_network_image:
+  transparent_image:
 dev_dependencies:
   flutter_test:
     sdk: flutter

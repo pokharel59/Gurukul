@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class StudentCustomAppBar<T> extends StatelessWidget implements PreferredSizeWidget{
   final String title;
+  final String studentName;
+  final String studentId;
+
 
   StudentCustomAppBar({
     required this.title,
+    required this.studentName,
+    required this.studentId
   });
   @override
   Widget build(BuildContext context){
@@ -21,12 +26,16 @@ class StudentCustomAppBar<T> extends StatelessWidget implements PreferredSizeWid
       ),
       backgroundColor: Colors.white,
       actions: [
-        IconButton(
-            onPressed: (){
-              //Navigator.pushReplacementNamed(context, '/adminPage');
-            },
-            icon: Icon(Icons.notifications, color: Colors.black,)
-        )
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Text(studentName, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 17),),
+              SizedBox(height: 1),
+              Text(studentId, style: TextStyle(fontWeight: FontWeight.w400, color: Colors.grey, fontSize: 14),)
+            ],
+          ),
+        ),
       ],
     );
   }

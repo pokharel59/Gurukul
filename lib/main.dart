@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         //'/home': (context) => MyHomePage(),
         '/adminPage': (context) => AdminViewClass(),
         '/createClass': (context) => AdminCreateClass()
-        //'/adminHome': (context) => AdminBottomNav()
+        //'/adminHome': (context) => AdminBottomNav(),
       },
       home: LoginPage(),
 
@@ -62,12 +62,14 @@ class _MyHomePage extends State<MyHomePage>{
     classId = widget.classId;
     studentName = widget.studentName;
     studentID = widget.studentID;
+    studentName = widget.studentName;
+    studentID = widget.studentID;
     _pages = [
-      HomePage(),
-      CalendarPage(classId: classId),
+      HomePage(classId: classId, studentName: studentName, studentID: studentID),
+      CalendarPage(classId: classId, studentName: studentName, studentID: studentID),
       AssignmentPage(classId: classId, studentName: studentName, studentID: studentID),
       EventPage(),
-      NoticePage(classId: classId)
+      NoticePage(classId: classId, studentName: studentName, studentID: studentID)
     ];
   }
 

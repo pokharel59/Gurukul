@@ -73,13 +73,13 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
       return contentTypeMap[extension] ?? 'application/octet-stream';
     }
 
-    Future<void> uploadDateFiles() async {
+    Future<void> uploadDateFiles(String fileUrl) async {
       if (_files == null || _files.isEmpty) {
         print("No files displayed");
         return;
       }
 
-      String downloadURLs = "";
+      String ? downloadURLs;
 
       try {
         for (File file in _files) {
@@ -97,15 +97,16 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
           downloadURLs = fileDownloadURL;
         }
 
-        String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss Z').format(selectDateTime);
+        //String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss Z').format(selectDateTime);
         if(classId.isNotEmpty && subDocumentId.isNotEmpty){
           AssignmentModel assignmentModel = AssignmentModel(
               title: assignmentTitle.text,
               description: assignmentDescription.text,
               subject: selectedItem,
-              deadline: formattedDate,
-              documentUrl: downloadURLs,
-            studentSubmittion: []
+              deadline: selectDateTime,
+              documentUrl: downloadURLs ?? fileUrl,
+            date: DateTime.now(),
+            studentsSubmittion: []
           );
           _assignmentController.updateAssignment(classId, subDocumentId, assignmentModel);
           Navigator.pop(context);
@@ -173,6 +174,7 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
               physics: BouncingScrollPhysics(),
               child: Container(
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     GestureDetector(
                       onTap: ()async{
@@ -335,7 +337,7 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: ElevatedButton(
                                     onPressed: ()async{
-                                      uploadDateFiles();
+                                      uploadDateFiles(fileUrl);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.blue, // Background color
@@ -362,6 +364,105 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
         }
     );
   }
+
+  void _viewSubmissions(List<Map<String, dynamic>> submissions) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Submitted Assignments'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                Table(
+                  border: TableBorder.all(),
+                  columnWidths: {
+                    0: FixedColumnWidth(100),
+                    1: FixedColumnWidth(100),
+                    2: FixedColumnWidth(100),
+                  },
+                  children: [
+                    TableRow(
+                      children: [
+                        TableCell(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Name'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('ID'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Answer'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Document'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    for (var submission in submissions)
+                      TableRow(
+                        children: [
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Text(submission['name']),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Text(submission['id']),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Text(submission['assignmentText']),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Image.network(
+                                submission['documentUrl'],
+                                width: 80,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 
 
   @override
@@ -429,52 +530,63 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
 
                       List<AssignmentModel> assignments = snapshot.data ?? [];
 
-                      if(assignments.isEmpty){
-                        return Center(child: Text('No assignments available.'));
-                      }
-
-                      return ListView.builder(
+                      return assignments.isEmpty ? Center(child: Text('No assignments available.')) : ListView.builder(
                           itemCount: assignments.length,
                           itemBuilder: (context, index){
                             return Padding(
                               padding: const EdgeInsets.all(8),
                               child: InkWell(
-                                onTap: ()async{
+                                onTap: () async{
                                   CollectionReference collection = FirebaseFirestore.instance.collection('classes').doc(classId).collection('assignments');
                                   QuerySnapshot querySnapshot = await collection.get();
                                   DocumentSnapshot documentSnapshot = querySnapshot.docs[index];
 
                                   String documentId = documentSnapshot.id;
-                                  String _deadline = assignments[index].deadline;
-                                  DateTime _deadlineInDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(_deadline);
+                                  DateTime _deadline = assignments[index].deadline;
+                                  //DateTime _deadlineInDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(_deadline);
                                   _editAssignment(
                                     assignments[index].title,
                                     assignments[index].description,
-                                    _deadlineInDate,
+                                    _deadline,
                                     assignments[index].subject,
                                     documentId,
                                     assignments[index].documentUrl,
                                   );
                                 },
-                                child: Card(
-                                  child: ListTile(
-                                    leading: Text(assignments[index].deadline),
-                                    title: Text(assignments[index].title),
-                                    subtitle: Text(assignments[index].description),
-                                    trailing: IconButton(
-                                        onPressed: ()async{
-                                          CollectionReference collection = FirebaseFirestore.instance.collection('classes').doc(classId).collection('assignments');
-                                          QuerySnapshot querySnapshot = await collection.get();
-                                          DocumentSnapshot documentSnapshot = querySnapshot.docs[index];
+                                  child: Card(
+                                    child: ListTile(
+                                      //leading: Text(assignments[index].deadline),
+                                      title: Text(assignments[index].title),
+                                      subtitle: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(assignments[index].description),
+                                          ElevatedButton(onPressed: (){
+                                            List<Map<String, dynamic>> submittedAssignments = assignments[index].studentsSubmittion;
+                                            _viewSubmissions(submittedAssignments);
+                                          },
+                                            child: Text("Submissions")
+                                          ),
+                                        ],
+                                      ),
+                                      trailing: Column(
+                                        children: [
+                                          IconButton(
+                                              onPressed: ()async{
+                                                CollectionReference collection = FirebaseFirestore.instance.collection('classes').doc(classId).collection('assignments');
+                                                QuerySnapshot querySnapshot = await collection.get();
+                                                DocumentSnapshot documentSnapshot = querySnapshot.docs[index];
 
-                                          String documentId = documentSnapshot.id;
-                                          _assignmentController.deleteAssignment(classId, documentId);
-                                          refresh();
-                                        },
-                                        icon: Icon(Icons.delete)
+                                                String documentId = documentSnapshot.id;
+                                                _assignmentController.deleteAssignment(classId, documentId);
+                                                refresh();
+                                              },
+                                            icon: Icon(Icons.delete, size: 24),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
                               ),
                             );
                           }
@@ -482,7 +594,7 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
                     }
                 ),
               )
-          )
+          ),
         ],
       ),
     );

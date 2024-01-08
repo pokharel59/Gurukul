@@ -2,24 +2,45 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/studentCustomAppBar.dart';
 import 'package:gurukul_mobile_app/Controllers/AdminController/aNoticeContoller.dart';
-
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'dart:math';
 import '../../Models/AdminModels/aNoticeModel.dart';
 
 class NoticePage extends StatefulWidget{
   final String classId;
+  final String studentName;
+  final String studentID;
 
-  NoticePage({required this.classId});
+  NoticePage({required this.classId, required this.studentName, required this.studentID});
   @override
   State<NoticePage> createState() => _NoticePageState();
 }
 
 class _NoticePageState extends State<NoticePage>{
   final NoticeController _noticeController = NoticeController();
+  var primary_color = Color(0xFF687EFF);
+  final Random random = Random();
   late String classId;
+  late String studentName;
+  late String studentID;
+
+  final List<Color> predefinedColors = [
+    Color(0xFFA8DF8E),
+    Color(0xFFA0E9FF),
+    Color(0xFFffbfbf),
+    Color(0xFFFEFFAC),
+    Color(0xFFFFB6D9),
+  ];
+
+  Color _getRandomColor(){
+    return predefinedColors[random.nextInt(predefinedColors.length)];
+  }
 
   void initState(){
     super.initState();
     classId = widget.classId;
+    studentName = widget.studentName;
+    studentID = widget.studentID;
   }
 
   Future<void> refresh()async{
@@ -58,13 +79,18 @@ class _NoticePageState extends State<NoticePage>{
     );
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: StudentCustomAppBar(title: "Notice Page"),
+      appBar: StudentCustomAppBar(title: "Notice Board", studentId: studentID, studentName: studentName,),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 10),
           Expanded(
               child: RefreshIndicator(
                 onRefresh: refresh,
@@ -72,7 +98,7 @@ class _NoticePageState extends State<NoticePage>{
                     stream: _noticeController.getNotice(classId),
                     builder: (context, snapshot){
                       if(snapshot.connectionState == ConnectionState.waiting){
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: LoadingAnimationWidget.inkDrop(color:primary_color, size: 37));
                       }
 
                       if(snapshot.hasError){
@@ -94,6 +120,7 @@ class _NoticePageState extends State<NoticePage>{
                         ),
                         itemCount: notices.length,
                         itemBuilder: (BuildContext context, int index) {
+                          Color cardColor = _getRandomColor();
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
@@ -112,7 +139,7 @@ class _NoticePageState extends State<NoticePage>{
                                       width: 175,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),
-                                        color: Color(0xffa1e9ff),
+                                        color: cardColor
                                       ),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +147,7 @@ class _NoticePageState extends State<NoticePage>{
                                         children: [
                                           ClipRRect(
                                             borderRadius: BorderRadius.circular(10),
-                                            child: Image.network(notices[index].documentUrl,
+                                            child: Image.network (notices[index].documentUrl,
                                               width: 80,
                                               height: 60,
                                               fit: BoxFit.cover,

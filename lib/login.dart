@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Components/messageToast.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aStudentModel.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aTeacherModel.dart';
-import 'package:gurukul_mobile_app/Views/StudentView/sAssignment.dart';
-import 'package:gurukul_mobile_app/Views/StudentView/sHome.dart';
 import 'package:gurukul_mobile_app/loginController.dart';
 import 'package:gurukul_mobile_app/main.dart';
 
@@ -211,20 +209,43 @@ class _LoginPageState extends State<LoginPage> {
                           List<StudentModel> students = await loginController.fetchStudentData(documentID);
                           List<TeacherModel> teachers = await loginController.fetchSTeacherData(documentID);
 
-                          if(students.any((student) => student.id == enteredID && student.password == enteredPassword)){
-                            Navigator.push(context, 
-                                MaterialPageRoute(builder: (context) => MyHomePage(classId: documentID, studentID: students.first.id, studentName: students.first.name,))
+                          if (students.any((student) => student.id == enteredID && student.password == enteredPassword)) {
+                            StudentModel matchingStudent = students.firstWhere(
+                                  (student) => student.id == enteredID && student.password == enteredPassword,
                             );
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyHomePage(
+                                  classId: documentID,
+                                  studentID: matchingStudent.id,
+                                  studentName: matchingStudent.name,
+                                ),
+                              ),
+                            );
+
                             showMessage.showToast('Login successful');
-                          }if(teachers.any((teacher) => teacher.id == enteredID && teacher.password == enteredPassword)){
-                            Navigator.pushReplacementNamed(context, '/adminPage');
-                            showMessage.showToast('Login successful');
+                            ClassName.clear();
+                            StudentIDText.clear();
+                            PasswordText.clear();
                           }else{
                             showMessage.showToast('Error login');
                           }
+                          if(teachers.any((teacher) => teacher.id == enteredID && teacher.password == enteredPassword)){
+                            Navigator.pushReplacementNamed(context, '/adminPage');
+                            showMessage.showToast('Login successful');
+                            ClassName.clear();
+                            StudentIDText.clear();
+                            PasswordText.clear();
+                          }
+                          else{
+                            //showMessage.showToast('EEEError login');
+                          }
 
-                        }else{
-                          showMessage.showToast('Document ID did not found');
+                        }
+                        else{
+                          showMessage.showToast('Class ID not found');
                         }
                       }
                     },

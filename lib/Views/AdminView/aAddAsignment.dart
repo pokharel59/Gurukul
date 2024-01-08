@@ -109,14 +109,15 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
       print("Download URLs: $downloadURLs");
 
       // Once all files are uploaded, proceed with Firestore operation
-      String formattedDeadline = DateFormat('yyyy-MM-dd HH:mm:ss Z').format(selectDateTime);
+      //String formattedDeadline = DateFormat('yyyy-MM-dd HH:mm:ss Z').format(selectDateTime);
       AssignmentModel assignmentModel = AssignmentModel(
         title: assignmentTitle.text,
         description: assignmentDescription.text,
         subject: selectedItem,
-        deadline: formattedDeadline,
+        deadline: selectDateTime,
         documentUrl: downloadURLs,
-        studentSubmittion: []
+        studentsSubmittion: [],
+        date: DateTime.now()
       );
 
       // Print the AssignmentModel for debugging

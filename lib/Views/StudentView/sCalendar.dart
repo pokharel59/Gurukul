@@ -5,13 +5,16 @@ import 'package:gurukul_mobile_app/Components/studentCustomAppBar.dart';
 import 'package:gurukul_mobile_app/Controllers/AdminController/aCalenderController.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aCalenderModel.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../Models/StudentModel/sCalenderModel.dart';
 
 class CalendarPage extends StatefulWidget {
   final String classId;
+  final String studentName;
+  final String studentID;
 
-  const CalendarPage({required this.classId});
+  const CalendarPage({required this.classId, required this.studentName, required this.studentID});
   @override
   State<CalendarPage> createState() => _CalendarPageState();
 }
@@ -19,9 +22,11 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   final CalenderController calenderController = CalenderController();
   var orange_color = Color(0xfff04d22);
-  var primary_color = Color(0xffbe00fe);
+  var primary_color = Color(0xFF687EFF);
   var grey_color = Colors.grey;
   late String classId;
+  late String studentName;
+  late String studentID;
 
   late MarkerBuilder? markerBuilder;
 
@@ -32,6 +37,8 @@ class _CalendarPageState extends State<CalendarPage> {
   void initState() {
     super.initState();
     classId = widget.classId;
+    studentName = widget.studentName;
+    studentID = widget.studentID;
     _events = LinkedHashMap(
       equals: isSameDay,
       hashCode: getHashCode,
@@ -75,11 +82,11 @@ class _CalendarPageState extends State<CalendarPage> {
   Color _getEventType(String eventType){
     switch (eventType){
       case 'Deadline':
-        return Colors.red;
+        return Color(0xFFFF2442);
     case 'Holiday':
-      return Colors.green;
+      return Color(0xFF54B435);
     case 'Event':
-      return Colors.yellow;
+      return Color(0xFF83A2FF);
       default:
         return Colors.grey;
     }
@@ -89,16 +96,16 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: StudentCustomAppBar(title: 'Academic Calender'),
+      appBar: StudentCustomAppBar(title: 'Academic Calender', studentId: studentID, studentName: studentName,),
       body: Container(
-        padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+        padding: EdgeInsets.fromLTRB(10, 15, 10, 0),
         height: size.height,
         width: size.width,
         color: Colors.white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10),
-
             // Calendar table
             // Table calendar
             Container(
@@ -214,7 +221,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       stream: calenderController.getCalenderEvent(classId),
                       builder: (context, snapshot){
                         if(snapshot.connectionState == ConnectionState.waiting){
-                          return Center(child: CircularProgressIndicator());
+                          return Center(child: LoadingAnimationWidget.inkDrop(color:primary_color, size: 37));
                         }
 
                         if(snapshot.hasError){
@@ -261,7 +268,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                           ),
                                           Container(
                                             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                            width: 290,
+                                            width: 280,
                                             height: 60,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(10),
@@ -270,8 +277,8 @@ class _CalendarPageState extends State<CalendarPage> {
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text(events[index].eventTitle.toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),),
-                                                Text(events[index].eventType.toUpperCase(), style: TextStyle(color: grey_color),),
+                                                Text(events[index].eventTitle.capitalize(), style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),),
+                                                Text(events[index].eventType.capitalize(), style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w600),),
                                               ],
                                             ),
 
@@ -290,5 +297,12 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
       ),
     );
+  }
+}
+
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }

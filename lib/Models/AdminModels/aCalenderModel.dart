@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CalenderModel{
+class CalenderModel {
+  // variables
   final DateTime calenderDate;
   final String eventTitle;
   final String eventType;

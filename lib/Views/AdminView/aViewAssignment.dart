@@ -17,7 +17,8 @@ class AdminViewAssignments extends StatefulWidget{
   State<AdminViewAssignments> createState() => _AdminViewAssignmentPageState();
 }
 
-class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
+class _AdminViewAssignmentPageState extends State<AdminViewAssignments> {
+  // variables
   final AssignmentController _assignmentController = AssignmentController();
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   late String classId;
@@ -81,6 +82,7 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
 
       String downloadURLs = "";
 
+      // try-catch block for error handling
       try {
         for (File file in _files) {
           String fileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -155,7 +157,6 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
       Navigator.pop(context); // Close the current bottom sheet
       _editAssignment(title, description, deadline, subject, subDocumentId, fileUrl);// Open a new bottom sheet
     }
-
 
     showModalBottomSheet(
         context: context,
@@ -363,7 +364,6 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -487,5 +487,4 @@ class _AdminViewAssignmentPageState extends State<AdminViewAssignments>{
       ),
     );
   }
-
 }

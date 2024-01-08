@@ -8,7 +8,8 @@ import 'package:gurukul_mobile_app/Controllers/AdminController/aNoticeContoller.
 import 'package:gurukul_mobile_app/Models/AdminModels/aNoticeModel.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddNotice.dart';
 
-class AdminViewNotice extends StatefulWidget{
+class AdminViewNotice extends StatefulWidget {
+  // variable
   final String classId;
 
   AdminViewNotice({required this.classId});
@@ -22,18 +23,15 @@ class _AdminViewNoticePageState extends State<AdminViewNotice>{
 
   late String classId;
 
+  // init method
   void initState(){
     super.initState();
     classId = widget.classId;
   }
 
   Future<void> refresh()async{
-    setState(() {
-
-    });
+    setState(() {});
   }
-
-
 
   late List<File> _files = [];
   Image? previewImage;
@@ -78,6 +76,7 @@ class _AdminViewNoticePageState extends State<AdminViewNotice>{
 
       String downloadURLs = "";
 
+      // try-catch block for error handling
       try {
         for (File file in _files) {
           String fileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -109,9 +108,10 @@ class _AdminViewNoticePageState extends State<AdminViewNotice>{
 
         // Print the download URLs for debugging
         print("Download URLs: $fileUrl");
-      } catch (e) {
-        print('Error uploading files: $e');
+      }
+      catch (e) {
         // Handle errors if needed
+        print('Error uploading files: $e');
       }
     }
 

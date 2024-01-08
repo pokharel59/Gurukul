@@ -9,7 +9,8 @@ class AdminCreateClass extends StatefulWidget{
   State<StatefulWidget> createState() => _AdminCreateClassPageState();
 }
 
-class _AdminCreateClassPageState extends State<AdminCreateClass>{
+class _AdminCreateClassPageState extends State<AdminCreateClass> {
+  // text editing controllers
   final TextEditingController classNameController = TextEditingController();
   final ClassController _classController = ClassController();
   final List<TextEditingController> subjectControllers = [];
@@ -187,6 +188,3 @@ class _AdminCreateClassPageState extends State<AdminCreateClass>{
     );
   }
 }
-
-
-

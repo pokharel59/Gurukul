@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // text editing controllers
   TextEditingController ClassName = TextEditingController();
   TextEditingController StudentIDText = TextEditingController();
   TextEditingController PasswordText = TextEditingController();
@@ -99,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  //student id text input
+
+                  // student id text input
                   SizedBox(
                     height: 50,
                     child: TextField(
@@ -120,6 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   SizedBox(height: 20),
+
                   //student id text
                   Text("Student ID",
                     style: TextStyle(
@@ -128,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 10),
+
                   //student id text input
                   SizedBox(
                     height: 50,
@@ -149,15 +153,18 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   SizedBox(height: 20),
-                  //password text
+
+                  // password text
                   Text("Password",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+
                   SizedBox(height: 10),
-                  //password input
+
+                  // password input
                   SizedBox(
                     height: 50,
                     child: TextField(
@@ -177,9 +184,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+
                   SizedBox(height: 2),
 
-                  //forgot password text
+                  // forgot password text
                   Container(
                     width: double.infinity,
                     child: Text("Forgot Password?",
@@ -195,35 +203,37 @@ class _LoginPageState extends State<LoginPage> {
 
                   SizedBox(height: 20),
 
-                  //login button
+                  // login button
                   ElevatedButton(
-                    onPressed: ()async {
+                    onPressed: () async {
                       String enteredID = StudentIDText.text.trim();
                       String enteredPassword = PasswordText.text.trim();
                       String enteredClassName = ClassName.text;
 
+                      // input data validation
                       if (enteredID == null || enteredID.isEmpty || enteredPassword == null || enteredPassword.isEmpty) {
                         showMessage.showToast('Field cannot be empty');
                       } else {
                         String? documentID = await loginController.getDocumentIDByClassName(enteredClassName);
 
-                        if(documentID != null){
+                        if (documentID != null) {
                           List<StudentModel> students = await loginController.fetchStudentData(documentID);
                           List<TeacherModel> teachers = await loginController.fetchSTeacherData(documentID);
 
-                          if(students.any((student) => student.id == enteredID && student.password == enteredPassword)){
+                          if (students.any((student) => student.id == enteredID && student.password == enteredPassword)){
                             Navigator.push(context, 
                                 MaterialPageRoute(builder: (context) => MyHomePage(classId: documentID, studentID: students.first.id, studentName: students.first.name,))
                             );
                             showMessage.showToast('Login successful');
-                          }if(teachers.any((teacher) => teacher.id == enteredID && teacher.password == enteredPassword)){
+                          }
+                          if (teachers.any((teacher) => teacher.id == enteredID && teacher.password == enteredPassword)){
                             Navigator.pushReplacementNamed(context, '/adminPage');
                             showMessage.showToast('Login successful');
-                          }else{
+                          } else {
                             showMessage.showToast('Error login');
                           }
-
-                        }else{
+                        }
+                        else {
                           showMessage.showToast('Document ID did not found');
                         }
                       }
@@ -242,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    style: ElevatedButton.styleFrom(  //.styleForm style the elevated button.
+                    style: ElevatedButton.styleFrom(  // styleForm style the elevated button.
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -250,8 +260,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ],
+              ),
             ),
-          ),
           ),
         ],
       ),

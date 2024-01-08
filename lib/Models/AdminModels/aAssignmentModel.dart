@@ -1,4 +1,5 @@
-class AssignmentModel{
+class AssignmentModel {
+  // variables
   final String title;
   final String description;
   final String subject;

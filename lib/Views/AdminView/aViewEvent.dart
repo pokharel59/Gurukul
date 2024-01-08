@@ -22,7 +22,8 @@ class AdminViewEvents extends StatefulWidget{
   State<AdminViewEvents> createState() => _AdminViewEventPageState();
 }
 
-class _AdminViewEventPageState extends State<AdminViewEvents>{
+class _AdminViewEventPageState extends State<AdminViewEvents> {
+  // variables
   final EventController _eventController = EventController();
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 

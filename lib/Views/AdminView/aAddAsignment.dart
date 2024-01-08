@@ -16,7 +16,8 @@ class AdminAssignmentPage extends StatefulWidget{
   State<AdminAssignmentPage> createState() => _AdminAssignmentPageState();
 }
 
-class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
+class _AdminAssignmentPageState extends State<AdminAssignmentPage> {
+  // variables declaration
   late String classId;
   final TextEditingController assignmentTitle = TextEditingController();
   final TextEditingController assignmentDescription = TextEditingController();
@@ -24,11 +25,13 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   late List<File> _files = [];
 
+  // init method
   void initState(){
     super.initState();
     classId = widget.classID;
   }
 
+  // values assigned to variables
   String selectedItem = 'science';
   List<String> subjectItemList = ['math', 'science', 'nepali'];
   DateTime selectDateTime = DateTime.now();
@@ -41,6 +44,7 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
       lastDate: DateTime(2100),
     );
 
+    // condition check
     if (pickedDate != null) {
       TimeOfDay? pickedTime = await showTimePicker(
         context: context,
@@ -68,6 +72,7 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
   Future<void> getFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
 
+    // condition check
     if (result != null) {
       _files = result.files.map((file) => File(file.path!)).toList();
       setState(() {
@@ -89,6 +94,7 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
 
     String downloadURLs = "";
 
+    // try-catch block (error handling)
     try {
       for (File file in _files) {
         String fileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -126,9 +132,10 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
       assignmentTitle.clear();
       assignmentDescription.clear();
       Navigator.pop(context);
-    } catch (e) {
-      print('Error uploading files: $e');
+    }
+    catch (e) {
       // Handle errors if needed
+      print('Error uploading files: $e');
     }
   }
 
@@ -331,11 +338,9 @@ class _AdminAssignmentPageState extends State<AdminAssignmentPage>{
                   ),
                 ],
               )
-
             ],
           ),
         )
     );
   }
-
 }

@@ -5,7 +5,8 @@ import 'package:gurukul_mobile_app/Controllers/AdminController/aTeacherControlle
 import 'package:gurukul_mobile_app/Models/AdminModels/aTeacherModel.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aAddStudent.dart';
 
-class AdminTeacher extends StatefulWidget{
+class AdminTeacher extends StatefulWidget {
+  // variable
   final String classId;
 
   AdminTeacher({required this.classId});
@@ -13,7 +14,8 @@ class AdminTeacher extends StatefulWidget{
   State<StatefulWidget> createState() => _AdminTeacherPageState();
 }
 
-class _AdminTeacherPageState extends State<AdminTeacher>{
+class _AdminTeacherPageState extends State<AdminTeacher> {
+  // variable declaration
   final TextEditingController _teacherName = TextEditingController();
   final TextEditingController _teacherId = TextEditingController();
   final TextEditingController _teacherPassword = TextEditingController();
@@ -226,5 +228,4 @@ class _AdminTeacherPageState extends State<AdminTeacher>{
         )
     );
   }
-
 }

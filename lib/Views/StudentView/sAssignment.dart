@@ -18,6 +18,7 @@ class AssignmentPage extends StatefulWidget {
 }
 
 class _AssignmentPageState extends State<AssignmentPage> {
+  // variable declarations
   final AssignmentController assignmentController = AssignmentController();
   final SubmitAssignmentController submitAssignmentController = SubmitAssignmentController();
   var orange_color = Color(0xfff04d22);
@@ -39,6 +40,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
   Future<void> getFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
 
+    // condition check
     if (result != null) {
       _files = result.files.map((file) => File(file.path!)).toList();
       setState(() {

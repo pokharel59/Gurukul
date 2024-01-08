@@ -9,6 +9,7 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
+  // declaring variables
   var orange_color = Color(0xfff04d22);
   var primary_color = Color(0xffbe00fe);
   var grey_color = Colors.grey;
@@ -32,7 +33,7 @@ class _EventPageState extends State<EventPage> {
               ],
             ),
 
-            //horizontal separator
+            // horizontal separator
             Container(
               height: 2,
               width: size.width,
@@ -41,7 +42,7 @@ class _EventPageState extends State<EventPage> {
 
             SizedBox(height: 10),
 
-            //upcoming events
+            // upcoming events
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -70,7 +71,7 @@ class _EventPageState extends State<EventPage> {
 
             SizedBox(height: 10),
 
-            //single child scrollview
+            // single child scrollview
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -188,7 +189,8 @@ class _EventPageState extends State<EventPage> {
                           ],
                         ),
                         SizedBox(height: 10),
-                        //stack container
+
+                        // stack container
                         Container(
                           width: size.width,
                           child: Stack(
@@ -222,7 +224,8 @@ class _EventPageState extends State<EventPage> {
                                       backgroundImage: Image.network('https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D').image,
                                     ),
 
-                                  )),
+                                  ),
+                              ),
                               Positioned(
                                   left: 30,
                                   child: CircleAvatar(
@@ -233,15 +236,16 @@ class _EventPageState extends State<EventPage> {
                                       backgroundImage: Image.network('https://plus.unsplash.com/premium_photo-1670282393309-70fd7f8eb1ef?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D').image,
                                     ),
 
-                                  )),
+                                  ),
+                              ),
                             ],
                           ),
                         )
-
                       ],
                     ),
                   ),
                   SizedBox(width: 12),
+
                   Container(
                     padding: EdgeInsets.all(10),
                     height: 180,
@@ -272,7 +276,8 @@ class _EventPageState extends State<EventPage> {
                           ],
                         ),
                         SizedBox(height: 10),
-                        //stack container
+
+                        // stack container
                         Container(
                           width: size.width,
                           child: Stack(
@@ -295,7 +300,8 @@ class _EventPageState extends State<EventPage> {
                                       backgroundImage: Image.network('https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D').image,
                                     ),
 
-                                  )),
+                                  ),
+                              ),
                               Positioned(
                                   left: 20,
                                   child: CircleAvatar(
@@ -306,7 +312,8 @@ class _EventPageState extends State<EventPage> {
                                       backgroundImage: Image.network('https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D').image,
                                     ),
 
-                                  )),
+                                  ),
+                              ),
                               Positioned(
                                   left: 30,
                                   child: CircleAvatar(
@@ -317,7 +324,8 @@ class _EventPageState extends State<EventPage> {
                                       backgroundImage: Image.network('https://plus.unsplash.com/premium_photo-1670282393309-70fd7f8eb1ef?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D').image,
                                     ),
 
-                                  )),
+                                  ),
+                              ),
                             ],
                           ),
                         )
@@ -355,7 +363,8 @@ class _EventPageState extends State<EventPage> {
                           ],
                         ),
                         SizedBox(height: 10),
-                        //stack container
+
+                        // stack container
                         Container(
                           width: size.width,
                           child: Stack(
@@ -378,7 +387,8 @@ class _EventPageState extends State<EventPage> {
                                       backgroundImage: Image.network('https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D').image,
                                     ),
 
-                                  )),
+                                  ),
+                              ),
                               Positioned(
                                   left: 20,
                                   child: CircleAvatar(
@@ -412,7 +422,7 @@ class _EventPageState extends State<EventPage> {
             ),
             SizedBox(height: 22),
 
-            //running events
+            // running events
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -438,7 +448,8 @@ class _EventPageState extends State<EventPage> {
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
+
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -475,6 +486,7 @@ class _EventPageState extends State<EventPage> {
                           ],
                         ),
                         SizedBox(height: 16),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -601,7 +613,8 @@ class _EventPageState extends State<EventPage> {
                                           backgroundImage: Image.network('https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D').image,
                                         ),
 
-                                      )),
+                                      ),
+                                  ),
                                   Positioned(
                                     left: 30,
                                     child: CircleAvatar(
@@ -804,7 +817,7 @@ class _EventPageState extends State<EventPage> {
             ),
             SizedBox(height: 20,),
 
-            //your participation
+            // your participation
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

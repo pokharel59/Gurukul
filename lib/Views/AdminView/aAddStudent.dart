@@ -6,7 +6,8 @@ import 'package:gurukul_mobile_app/Views/AdminView/aAddTeacher.dart';
 
 import '../../Components/customAppBar.dart';
 
-class AdminStudent extends StatefulWidget{
+class AdminStudent extends StatefulWidget {
+  // variable
   final String classId;
 
   // Receive classId as a parameter in the constructor
@@ -226,11 +227,9 @@ class _AdminStudentPageState extends State<AdminStudent>{
                   ],
                 ),
               ),
-
             ],
           ),
         )
     );
   }
-
 }

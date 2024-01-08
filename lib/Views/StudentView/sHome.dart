@@ -11,6 +11,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // variables declaration
     var primary_color = Color(0xFFD000B6);
     var size = MediaQuery.of(context).size;
 
@@ -31,14 +32,14 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
 
-              //horizontal separator
+              // horizontal separator
               Container(
                 height: 2,
                 width: size.width,
                 color: Colors.grey,
               ),
 
-            //notice board
+            // notice board
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 10, 10, 4),
               child: SizedBox(
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
 
             SizedBox(height: 10),
 
-            //single child scrollview
+            // single child scrollview
             SingleChildScrollView(
               padding: EdgeInsets.only(left: 20),
               scrollDirection: Axis.horizontal,
@@ -169,7 +170,7 @@ class _HomePageState extends State<HomePage> {
               ),
               ),
 
-            //events
+            // events
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
               child: SizedBox(
@@ -219,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  //3 dots
+                  // 3 dots
                   Positioned(
                     bottom: 6,
                     left: 160,
@@ -267,7 +268,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.grey.shade400,
             ),
 
-            //assignments
+            // assignments
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
               child: SizedBox(
@@ -275,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text('Assignments', textAlign: TextAlign.start, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: primary_color),)),
             ),
 
-            //assignments items
+            // assignments items
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.only(left: 20, right: 20),
@@ -406,22 +407,15 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-
-
                   ],
-
                 ),
               ),
-
             ),
-
           ],
-      ),
         ),
-    );
-
-  }
-
+      ),
+     );
+    }
   }
 
 

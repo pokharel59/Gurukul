@@ -6,6 +6,7 @@ class CustomAppBar<T> extends StatelessWidget implements PreferredSizeWidget{
     CustomAppBar({
       required this.title,
   });
+
   @override
   Widget build(BuildContext context){
     return AppBar(

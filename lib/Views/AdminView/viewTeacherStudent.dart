@@ -12,7 +12,8 @@ import '../../Models/AdminModels/aClassModel.dart';
 import '../../Models/AdminModels/aStudentModel.dart';
 import '../../Models/AdminModels/aTeacherModel.dart';
 
-class AdminViewTeacherStudent extends StatefulWidget{
+class AdminViewTeacherStudent extends StatefulWidget {
+  // variable
   final String classId;
   AdminViewTeacherStudent({required this.classId});
   @override
@@ -24,6 +25,7 @@ class _AdminViewTeacherStudentPageState extends State<AdminViewTeacherStudent>{
   final TeacherController teacherController = TeacherController();
   late String classId;
 
+  // init method
   void initState(){
     super.initState();
     classId = widget.classId;
@@ -33,7 +35,8 @@ class _AdminViewTeacherStudentPageState extends State<AdminViewTeacherStudent>{
     setState(() {
     });
   }
-  void _editTeacher(String name, String id, String password, String documentId){
+  void _editTeacher(String name, String id, String password, String documentId) {
+    // text editing controllers
     final TextEditingController _teacherName = TextEditingController(text: name);
     final TextEditingController _teacherId = TextEditingController(text: id);
     final TextEditingController _teacherPassword = TextEditingController(text: password);
@@ -348,6 +351,7 @@ class _AdminViewTeacherStudentPageState extends State<AdminViewTeacherStudent>{
         }
     );
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -530,5 +534,4 @@ class _AdminViewTeacherStudentPageState extends State<AdminViewTeacherStudent>{
       ),
     );
   }
-
 }

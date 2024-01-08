@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aCreateClass.dart';
 import 'package:gurukul_mobile_app/Views/AdminView/aViewClass.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'Views/AdminView/aAddAsignment.dart';
 import 'Views/StudentView/sAssignment.dart';
 import 'Views/StudentView/sCalendar.dart';
 import 'Views/StudentView/sEvent.dart';
@@ -11,8 +12,10 @@ import 'login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-void main() async{
+// main function
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  var currentPlatform;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -32,15 +35,15 @@ class MyApp extends StatelessWidget {
         //'/home': (context) => MyHomePage(),
         '/adminPage': (context) => AdminViewClass(),
         '/createClass': (context) => AdminCreateClass()
-        //'/adminHome': (context) => AdminBottomNav()
+        // '/adminHome': (context) => AdminBottomNav()
       },
-      home: LoginPage(),
-
+      home: AdminAssignmentPage(classID: '',),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget{
+class MyHomePage extends StatefulWidget {
+  // variables declaration
   final String classId;
   final String studentName;
   final String studentID;
@@ -50,14 +53,15 @@ class MyHomePage extends StatefulWidget{
   _MyHomePage createState() => _MyHomePage();
 }
 
-class _MyHomePage extends State<MyHomePage>{
+class _MyHomePage extends State<MyHomePage> {
   int _currentIndex = 0;
   late String classId;
   late String studentName;
   late String studentID;
   late List<Widget> _pages;
 
-  void initState(){
+  // init method
+  void initState() {
     super.initState();
     classId = widget.classId;
     studentName = widget.studentName;
@@ -72,12 +76,12 @@ class _MyHomePage extends State<MyHomePage>{
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_currentIndex],
         bottomNavigationBar: SalomonBottomBar(
           currentIndex: _currentIndex,
-            onTap: (index){
+            onTap: (index) {
               setState(() {
                 _currentIndex = index;
               });
@@ -110,6 +114,6 @@ class _MyHomePage extends State<MyHomePage>{
             ),
           ],
         ),
-    );
-  }
+      );
+    }
 }

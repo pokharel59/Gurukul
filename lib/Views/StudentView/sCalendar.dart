@@ -17,6 +17,8 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+
+  // variables declaration
   final CalenderController calenderController = CalenderController();
   var orange_color = Color(0xfff04d22);
   var primary_color = Color(0xffbe00fe);
@@ -29,6 +31,8 @@ class _CalendarPageState extends State<CalendarPage> {
 
   DateTime today = DateTime.now();
 
+
+  // init method
   void initState() {
     super.initState();
     classId = widget.classId;
@@ -72,7 +76,8 @@ class _CalendarPageState extends State<CalendarPage> {
     setState(() {});
   }
 
-  Color _getEventType(String eventType){
+  Color _getEventType(String eventType) {
+    // switch statement
     switch (eventType){
       case 'Deadline':
         return Colors.red;
@@ -87,6 +92,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
+    // variable named size
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: StudentCustomAppBar(title: 'Academic Calender'),
@@ -183,7 +189,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
             SizedBox(height: 20),
 
-            //sort by
+            // sort by
             Row(
               children: [
                 Text('Sort By:', style: TextStyle(color: grey_color, fontWeight: FontWeight.w500),),
@@ -206,7 +212,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
             SizedBox(height: 10),
 
-            //sorting items
+            // sorting items
             Expanded(
                 child: RefreshIndicator(
                   onRefresh: refresh,

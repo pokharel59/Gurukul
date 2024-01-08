@@ -8,14 +8,15 @@ class CalenderController{
     return collectionReference.doc(documentId).collection('academicCalender').add(calenderModel.toMap());
   }
 
-  Stream<List<CalenderModel>> getCalenderEvent(String documentId)async*{
-    try{
+  Stream<List<CalenderModel>> getCalenderEvent(String documentId)async* {
+    try {
       QuerySnapshot querySnapshot = await collectionReference.doc(documentId).collection('academicCalender').get();
 
       yield querySnapshot.docs
           .map((calenders) => CalenderModel.fromMap(calenders.data() as Map<String, dynamic>))
           .toList();
-    }catch(e){
+    }
+    catch(e){
       print('Error fetching data: $e');
     }
   }

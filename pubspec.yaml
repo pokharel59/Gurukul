@@ -42,7 +42,7 @@ dependencies:
   shared_preferences:
   http:
   intl:
-  firebase_core:
+  firebase_core: ^2.24.2
   file_picker:
   fluttertoast:
   cloud_firestore:

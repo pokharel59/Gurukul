@@ -7,16 +7,18 @@ import 'package:gurukul_mobile_app/Controllers/AdminController/aEventController.
 import 'package:gurukul_mobile_app/Models/AdminModels/aEventModel.dart';
 import 'package:intl/intl.dart';
 
-class AdminEventPage extends StatefulWidget{
+class AdminEventPage extends StatefulWidget {
+  // variable declaration
   final String classID;
 
-  AdminEventPage({required this.classID});
+  AdminEventPage({ required this.classID} );
 
   @override
   State<AdminEventPage> createState() => _AdminEventPageState();
 }
 
-class _AdminEventPageState extends State<AdminEventPage>{
+class _AdminEventPageState extends State<AdminEventPage> {
+  // variable declaration
   late String classId;
   final TextEditingController eventTitle = TextEditingController();
   final TextEditingController eventDescription = TextEditingController();
@@ -24,11 +26,13 @@ class _AdminEventPageState extends State<AdminEventPage>{
   final EventController eventController = EventController();
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
+  // init method
   void initState(){
     super.initState();
     classId = widget.classID;
   }
 
+  // values assigned to variables
   String selectedItem = 'Running';
   List<String> subjectItemList = ['Upcoming', 'Running'];
   DateTime selectDateTime = DateTime.now();
@@ -41,6 +45,7 @@ class _AdminEventPageState extends State<AdminEventPage>{
       lastDate: DateTime(2100),
     );
 
+    // condition check
     if (pickedDate != null) {
       TimeOfDay? pickedTime = await showTimePicker(
         context: context,
@@ -344,11 +349,9 @@ class _AdminEventPageState extends State<AdminEventPage>{
                   ),
                 ],
               )
-
             ],
           ),
         )
     );
   }
-
 }

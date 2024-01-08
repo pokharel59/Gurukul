@@ -1,4 +1,5 @@
-class EventModel{
+class EventModel {
+  // variables
   final String title;
   final String description;
   final String eventDate;
@@ -8,8 +9,8 @@ class EventModel{
 
   EventModel({required this.title, required this.description, required this.eventDate, required this.location, required this.eventStatus, required this.documentUrl});
 
-  Map<String, dynamic> toMap(){
-    return{
+  Map<String, dynamic> toMap() {
+    return {
       'title':title,
       'description':description,
       'eventDate':eventDate,
@@ -19,7 +20,7 @@ class EventModel{
     };
   }
 
-  factory EventModel.fromMap(Map<String, dynamic>map){
+  factory EventModel.fromMap(Map<String, dynamic>map) {
     return EventModel(
         title: map['title'],
         description: map['description'],

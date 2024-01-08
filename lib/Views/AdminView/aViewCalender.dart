@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 import '../../Controllers/AdminController/aCalenderController.dart';
 import '../../Models/AdminModels/aCalenderModel.dart';
 
-class ViewCalender extends StatefulWidget{
+class ViewCalender extends StatefulWidget {
+  // variable
   final String classId;
   
   ViewCalender({required this.classId});
@@ -19,7 +20,8 @@ class ViewCalender extends StatefulWidget{
 class _ViewCalenderState extends State<ViewCalender>{
   final CalenderController calenderController = CalenderController();
   late String classId;
-  
+
+  // init method
   void initState(){
     super.initState();
     classId = widget.classId;
@@ -335,5 +337,4 @@ class _ViewCalenderState extends State<ViewCalender>{
       ),
     );
   }
-  
 }

@@ -1,4 +1,5 @@
-class ClassModel{
+class ClassModel {
+  // variables
   final String className;
   final List<String> subjectName;
 

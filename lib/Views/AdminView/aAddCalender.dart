@@ -14,7 +14,8 @@ class AdminCalenderPage extends StatefulWidget{
   State<AdminCalenderPage> createState() => _AdminCalenderPageState();
 }
 
-class _AdminCalenderPageState extends State<AdminCalenderPage>{
+class _AdminCalenderPageState extends State<AdminCalenderPage> {
+  // variables
   final TextEditingController eventTitle = TextEditingController();
   final CalenderController calenderController = CalenderController();
   String selectedItem = 'Deadline';
@@ -22,6 +23,7 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
   DateTime selectDateTime = DateTime.now();
   late String classId;
 
+  // init method
   void initState(){
     super.initState();
     classId = widget.classId;
@@ -35,6 +37,7 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
       lastDate: DateTime(2100),
     );
 
+    // condition check
     if (pickedDate != null) {
       TimeOfDay? pickedTime = await showTimePicker(
         context: context,
@@ -196,11 +199,9 @@ class _AdminCalenderPageState extends State<AdminCalenderPage>{
                   ),
                 ],
               )
-
             ],
           ),
         )
     );
   }
-
 }

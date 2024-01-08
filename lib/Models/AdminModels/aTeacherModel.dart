@@ -1,4 +1,5 @@
-class TeacherModel{
+class TeacherModel {
+  // variables
   final String id;
   final String name;
   final String password;

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class NoticeModel{
+class NoticeModel {
+  // variables
   final String title;
   final String description;
   final String documentUrl;

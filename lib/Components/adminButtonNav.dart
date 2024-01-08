@@ -12,6 +12,7 @@ import 'package:gurukul_mobile_app/Views/AdminView/viewTeacherStudent.dart';
 import '../Views/AdminView/aAddNotice.dart';
 
 class AdminBottomNav extends StatefulWidget {
+  // variable
   final String classId;
 
   AdminBottomNav({required this.classId});

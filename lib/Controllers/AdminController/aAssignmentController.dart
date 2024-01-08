@@ -8,14 +8,15 @@ class AssignmentController{
     return collectionReference.doc(documentID).collection('assignments').add(assignmentModel.toMap());
   }
 
-  Stream<List<AssignmentModel>> getAssignment(String documentID)async*{
-    try{
+  Stream<List<AssignmentModel>> getAssignment(String documentID)async* {
+    try {
       QuerySnapshot querySnapshot = await collectionReference.doc(documentID).collection('assignments').get();
 
       yield querySnapshot.docs
           .map((assignment) => AssignmentModel.fromMap(assignment.data() as Map<String, dynamic>))
           .toList();
-    }catch(e){
+    }
+    catch(e){
       print('Error fetching data $e');
     }
   }

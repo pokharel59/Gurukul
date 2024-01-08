@@ -16,7 +16,7 @@ class NoticePage extends StatefulWidget{
   State<NoticePage> createState() => _NoticePageState();
 }
 
-class _NoticePageState extends State<NoticePage>{
+class _NoticePageState extends State<NoticePage> {
   final NoticeController _noticeController = NoticeController();
   var primary_color = Color(0xFF687EFF);
   final Random random = Random();
@@ -36,6 +36,7 @@ class _NoticePageState extends State<NoticePage>{
     return predefinedColors[random.nextInt(predefinedColors.length)];
   }
 
+  // init method
   void initState(){
     super.initState();
     classId = widget.classId;
@@ -45,11 +46,11 @@ class _NoticePageState extends State<NoticePage>{
 
   Future<void> refresh()async{
     setState(() {
-
     });
   }
 
-  void noticeDetail(String fileUrl, String title, String description){
+  // parameterized constructor
+  void noticeDetail(String fileUrl, String title, String description) {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -58,7 +59,7 @@ class _NoticePageState extends State<NoticePage>{
                 topLeft: Radius.circular(20)
             )
         ),
-        builder: (BuildContext cotext){
+        builder: (BuildContext context){
           return Container(
             child: Column(
               children: [
@@ -124,7 +125,7 @@ class _NoticePageState extends State<NoticePage>{
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
-                              onTap: (){
+                              onTap: () {
                                 noticeDetail(
                                     notices[index].documentUrl,
                                     notices[index].title,
@@ -167,7 +168,6 @@ class _NoticePageState extends State<NoticePage>{
                           );
                         },
                       );
-
                     }
                 ),
               )
@@ -176,6 +176,5 @@ class _NoticePageState extends State<NoticePage>{
       )
     );
   }
-
 }
 

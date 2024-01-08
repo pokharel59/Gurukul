@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class StudentCustomAppBar<T> extends StatelessWidget implements PreferredSizeWidget{
+class StudentCustomAppBar<T> extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String studentName;
   final String studentId;
@@ -11,8 +11,9 @@ class StudentCustomAppBar<T> extends StatelessWidget implements PreferredSizeWid
     required this.studentName,
     required this.studentId
   });
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios, color: Colors.black),

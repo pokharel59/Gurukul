@@ -6,7 +6,8 @@ import 'package:gurukul_mobile_app/Components/customAppBar.dart';
 import 'package:gurukul_mobile_app/Controllers/AdminController/aNoticeContoller.dart';
 import 'package:gurukul_mobile_app/Models/AdminModels/aNoticeModel.dart';
 
-class AdminNoticePage extends StatefulWidget{
+class AdminNoticePage extends StatefulWidget {
+  // variable
   final String classId;
 
   AdminNoticePage({required this.classId});
@@ -15,13 +16,15 @@ class AdminNoticePage extends StatefulWidget{
   State<AdminNoticePage> createState() => _AdminNoticePageState();
 }
 
-class _AdminNoticePageState extends State<AdminNoticePage>{
+class _AdminNoticePageState extends State<AdminNoticePage> {
+  // variable declaration
   final TextEditingController noticeTitle = TextEditingController();
   final TextEditingController noticeDescription = TextEditingController();
   final NoticeController noticeController = NoticeController();
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   late String classId;
 
+  // init method
   void initState(){
     super.initState();
     classId = widget.classId;
@@ -45,14 +48,16 @@ class _AdminNoticePageState extends State<AdminNoticePage>{
     }
 }
 
-Future<void> uploadDataFile()async{
+Future<void> uploadDataFile() async {
+    // condition check
     if(_files == null && _files.isEmpty){
       print("No files to display");
     }
 
       String downloadedUrl = "";
 
-    try{
+    // try-catch block for error handling
+    try {
       for(File file in _files){
         String fileName = DateTime.now().millisecondsSinceEpoch.toString();
         Reference reference = firebaseStorage.ref().child('files/$fileName');
@@ -78,12 +83,13 @@ Future<void> uploadDataFile()async{
       noticeTitle.clear();
       noticeDescription.clear();
       Navigator.pop(context);
-    }catch(e){
+    }
+    catch(e) {
       print('error uplading file and data $e');
     }
 }
 
-  String _getContentType(String filePath){
+  String _getContentType(String filePath) {
     Map<String, String> contentTypeMap = {
       'pdf': 'application/pdf',
       'doc' : 'application/msword',
@@ -231,11 +237,9 @@ Future<void> uploadDataFile()async{
                 ),
               ],
             )
-
           ],
         ),
       )
     );
   }
-
 }

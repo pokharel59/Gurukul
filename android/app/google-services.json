@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "784087147228",
+    "project_id": "gurukulapp-d85ef",
+    "storage_bucket": "gurukulapp-d85ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784087147228:android:6d34f0ab74aa79798f4a19",
+        "android_client_info": {
+          "package_name": "com.example.gurukul_mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJRFtzbszYxW06so1f8n7ci_GUQbROwIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
